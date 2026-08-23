@@ -556,7 +556,7 @@ body.js .panel.is-active{display:block}
         <div class="gap-row"><span class="gap-label">Capital underpriced by</span><span class="gap-val" data-count="68">68 bps</span></div>
       </div>
 
-      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the plain-English glossary if the terms are unfamiliar.</p>
+      <p class="stack-foot">Illustrative, on the five-component model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the plain-English glossary if the terms are unfamiliar.</p>
     </div>
   </div>
 </div>
@@ -763,7 +763,7 @@ body.js .panel.is-active{display:block}
 <div id="view-methodology">
 <header class="pagehead">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--brass)">ClarityStack™ v1.2 — five-component methodology</p>
+    <p class="eyebrow" style="color:var(--brass)">ClarityStack™ — five-component methodology</p>
     <h1>The calculation, shown in <em>full</em>.</h1>
     <p>Nothing here is a black box. Every input has a stated source, every component has visible logic, and the two judgement variables are labelled as judgement variables. This is the working model, run on an illustrative EUR 500mm fund.</p>
 
@@ -882,10 +882,10 @@ body.js .panel.is-active{display:block}
 
     <div class="formula">
 Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
-<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Net Idle Capital Drag <span class="new">— v1.2: nets off idle cash yield</span><br>
-<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> FX Sourcing Cost (optimised) <span class="new">— v1.2: lower of direct draw vs hedged</span><br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Net Idle Capital Drag <span class="new">: nets off idle cash yield</span><br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> FX Sourcing Cost (optimised) <span class="new">: lower of direct draw vs hedged</span><br>
 <span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Management Fee Drag Adjustment<br>
-<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Drawn Capital Opportunity Cost <span class="new">— v1.2: new component</span>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Drawn Capital Opportunity Cost <span class="new">: new component</span>
     </div>
 
     <div class="sheet">
@@ -962,7 +962,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
             <tr><td>Overnight / term deposit yield</td><td class="num v-input">3.40%</td><td class="unit">%</td><td class="note">Treasury sweep rate at measurement date</td></tr>
             <tr><td>Toggle: LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="unit">Y/N</td><td class="note">Must be confirmed against the LPA. Set NO if unconfirmed.</td></tr>
 
-            <tr class="section-row"><td colspan="4">4 &nbsp;Drawn but undeployed capital &nbsp;— new in v1.2</td></tr>
+            <tr class="section-row"><td colspan="4">4 &nbsp;Drawn but undeployed capital &nbsp;— new</td></tr>
             <tr><td>Amount drawn, not yet deployed</td><td class="num v-input">60,000,000</td><td class="unit">EUR</td><td class="note">Facility drawdown log vs deployment log</td></tr>
             <tr><td>Days drawn and undeployed</td><td class="num v-input">75</td><td class="unit">days</td><td class="note">Drawdown date to actual deployment date</td></tr>
             <tr><td>Facility interest rate on drawn amount</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Credit agreement: all-in rate on the facility actually drawn</td></tr>
@@ -1063,7 +1063,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
             <tr><td>Fee drag on idle capital</td><td class="num v-formula">739,726</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; 1.50% management fee = EUR 739,726. On an AuM basis the fee is charged on capital that has been called but is not yet working, so the fund pays to manage money that is doing nothing. On a commitment basis the fee does not vary with deployment and this line is zero.</td></tr>
             <tr class="total-row"><td>Component 4</td><td class="num">0.18%</td><td class="unit">18 bps</td><td class="note">EUR 739,726 &divide; EUR 400m total expected deployment = 0.18%. A one-off cost per euro deployed.</td></tr>
 
-            <tr class="section-row"><td colspan="4">Component 5 &nbsp;— Drawn capital opportunity cost &nbsp;· measured over 75 days &nbsp;— new in v1.2</td></tr>
+            <tr class="section-row"><td colspan="4">Component 5 &nbsp;— Drawn capital opportunity cost &nbsp;· measured over 75 days &nbsp;— new</td></tr>
             <tr><td>Combined annualised rate</td><td class="num v-formula">19.20%</td><td class="unit">1,920 bps</td><td class="note">5.20% facility interest rate + 14.00% forgone deployment return. You pay interest on the borrowing <em>and</em> lose the return the money would have made if invested.</td></tr>
             <tr><td>Drawn capital opportunity cost</td><td class="num v-formula">2,367,123</td><td class="unit">EUR</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 19.20% = EUR 2,367,123. The 75 days run from the drawdown date to the date the money was actually deployed.</td></tr>
             <tr class="memo-row"><td>Memo: facility interest alone</td><td class="num v-formula">641,096</td><td class="unit">EUR</td><td class="note">EUR 60m &times; (75 &divide; 365) &times; 5.20% = EUR 641,096. This is the only part the bank invoices for, and the only part most treasury systems record.</td></tr>
@@ -1171,7 +1171,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
       <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
     </div>
     <div>
-      <div class="spec-line"><span>Version</span><span>ClarityStack™ v1.2</span></div>
+      <div class="spec-line"><span>Version</span><span>ClarityStack™</span></div>
       <div class="spec-line"><span>Components</span><span>Five</span></div>
       <div class="spec-line"><span>Inputs</span><span>23, each sourced</span></div>
       <div class="spec-line"><span>Worked example</span><span>EUR 500mm fund</span></div>
