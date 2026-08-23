@@ -2,7 +2,7 @@
 
 Marketing site for Yield Horizon — cost-of-capital benchmarking for European private equity and credit fund managers.
 
-**Live site:** https://simonwilliams1.github.io/Yield-Horizon/
+**Live site:** https://yieldhorizon.co.uk/
 
 ## What this repository contains
 
