@@ -28,7 +28,7 @@ Images — the logo mark, the footer lockup and the portrait — are embedded as
 
 ## Content source
 
-Figures shown on the site come from `Yield_Horizon_ClarityStack_ICC_Calculator_v1_2.xlsx`, run on an illustrative EUR 500mm fund. That workbook is **not** stored in this repository.
+Figures shown on the site come from `Yield_Horizon_ClarityStack_ICC_Calculatorxlsx`, run on an illustrative EUR 500mm fund. That workbook is **not** stored in this repository.
 
 If the model is revised, these figures must be updated in `index.html` to match:
 
