@@ -112,7 +112,7 @@ h1{
   font-family:var(--display);
   font-weight:300;
   font-size:clamp(2.5rem,1.6rem + 4vw,4.2rem);
-  line-height:1.05;
+  line-height:1.12;
   letter-spacing:-.02em;
   margin:0 0 1.5rem;
 }
@@ -323,7 +323,7 @@ footer{background:var(--ink-deep);border-top:1px solid var(--line-dark);padding:
 /* header */
 .pagehead{background:var(--ink);color:var(--paper);padding:clamp(3rem,7vw,5rem) 0 clamp(2.5rem,5vw,3.5rem)}
 .pagehead h1{font-size:clamp(2.2rem,1.6rem + 2.8vw,3.4rem);
-  line-height:1.08;letter-spacing:-.02em;margin:0 0 1.1rem;max-width:22ch}
+  line-height:1.16;letter-spacing:-.02em;margin:0 0 1.5rem;max-width:22ch}
 .pagehead h1 em{font-style:italic;color:var(--brass)}
 .pagehead p{color:var(--slate-light);max-width:58ch;margin:0}
 .headline-figs{display:flex;flex-wrap:wrap;gap:2.5rem;margin-top:2.5rem;padding-top:1.8rem;
@@ -959,7 +959,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
 <div class="panel" id="p-inputs" role="tabpanel" aria-labelledby="t-inputs">
   <div class="wrap">
     <h2>Every input carries its source.</h2>
-    <p class="panel-lede">Twenty-three inputs, each labelled with the document it comes from. Where a figure is a judgement rather than an observable rate, it says so. The worked example below is an illustrative EUR 500mm fund.</p>
+    <p class="panel-lede">Every input is labelled with the document it comes from. Where a figure is a judgement rather than an observable rate, it says so. The worked example below is an illustrative EUR 500mm fund.</p>
 
     <div class="sheet">
       <div class="sheet-bar">
@@ -1077,7 +1077,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
 
             <tr class="section-row"><td colspan="4">Component 2 &nbsp;— Net idle capital drag &nbsp;· measured over 90 days</td></tr>
             <tr><td>Gross idle drag</td><td class="num v-formula">4,191,781</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; (8.00% preferred return + 0.50% commitment fee) = EUR 4,191,781. The preferred return accrues to LPs from the day capital is <em>called</em>, not the day it is invested &mdash; so 90 days of waiting costs real money.</td></tr>
-            <tr><td>Less: interest earned on placement</td><td class="num v-formula">(1,676,712)</td><td class="unit">EUR</td><td class="note">EUR 200m &times; (90 &divide; 365) &times; 3.40% deposit rate = EUR 1,676,712. Earned only where the LPA permits idle cash to be held in interest-bearing accounts. If it does not, this line is zero and the drag more than doubles.</td></tr>
+            <tr><td>Less: interest earned on placement</td><td class="num v-formula">(1,676,712)</td><td class="unit">EUR</td><td class="note">EUR 200m &times; (90 &divide; 365) &times; 3.40% deposit rate = EUR 1,676,712. Earned only where the LPA permits idle cash to be held in interest-bearing accounts. If it does not, this line is zero and the drag rises by two-thirds, from 63bps to 105bps.</td></tr>
             <tr><td>Net idle drag</td><td class="num v-formula">2,515,068</td><td class="unit">EUR</td><td class="note">EUR 4,191,781 &minus; EUR 1,676,712. What 90 days of idleness actually costs the fund.</td></tr>
             <tr class="total-row"><td>Component 2</td><td class="num">0.63%</td><td class="unit">63 bps</td><td class="note">EUR 2,515,068 &divide; EUR 400m total expected deployment = 0.63%. A one-off cost per euro deployed, not an annual rate.</td></tr>
 
@@ -1200,9 +1200,9 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
       <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
     </div>
     <div>
-      <div class="spec-line"><span>Version</span><span>ClarityStack™</span></div>
+      <div class="spec-line"><span>Framework</span><span>ClarityStack™</span></div>
       <div class="spec-line"><span>Components</span><span>Five</span></div>
-      <div class="spec-line"><span>Inputs</span><span>23, each sourced</span></div>
+      <div class="spec-line"><span>Inputs</span><span>Each one sourced</span></div>
       <div class="spec-line"><span>Worked example</span><span>EUR 500mm fund</span></div>
       <div class="spec-line" style="border-bottom:none"><span>Format</span><span>Excel, no add-ins</span></div>
     </div>
@@ -1303,8 +1303,6 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
         <div class="cred-val">Led a cross-functional treasury, structuring and finance team delivering across three jurisdictions.</div>
       </div>
     </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1317,7 +1315,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
       <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
     </div>
     <div>
-      <div class="spec-line"><span>Framework</span><span>ClarityStack&trade; </span></div>
+      <div class="spec-line"><span>Framework</span><span>ClarityStack&trade;</span></div>
       <div class="spec-line"><span>Read the model</span><span><a href="#view-methodology" style="color:var(--brass)">Methodology</a></span></div>
       <div class="spec-line" style="border-bottom:none"><span>Response</span><span>Within one working day</span></div>
     </div>
