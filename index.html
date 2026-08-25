@@ -33,7 +33,7 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{
   margin:0;
   background:var(--ink);
@@ -435,11 +435,40 @@ footer{background:var(--ink-deep);border-top:1px solid var(--line-dark);padding:
 
 /* ─── view switching ─── */
 /* View switching — pure CSS, no JavaScript required */
-#view-methodology{display:none}
-#view-methodology:target{display:block}
-body:has(#view-methodology:target) #view-home{display:none}
-body:has(#view-methodology:target) .nav-link[href="#view-methodology"]{color:var(--brass)}
-body:has(#view-methodology:target) .nav-link[href="#view-home"]{color:var(--slate-light)}
+#view-methodology,#view-about{display:none}
+#view-methodology:target,#view-about:target{display:block}
+body:has(#view-methodology:target) #view-home,
+body:has(#view-about:target) #view-home{display:none}
+body:has(#view-methodology:target) .nav-link[href="#view-methodology"],
+body:has(#view-about:target) .nav-link[href="#view-about"]{color:var(--brass)}
+body:has(#view-methodology:target) .nav-link[href="#view-home"],
+body:has(#view-about:target) .nav-link[href="#view-home"]{color:var(--slate-light)}
+
+/* ─── About page ─── */
+.cv{border-top:1px solid var(--line-light)}
+.cv-role{display:grid;grid-template-columns:1fr;gap:.6rem;padding:2.2rem 0;
+  border-bottom:1px solid var(--line-light)}
+@media(min-width:860px){.cv-role{grid-template-columns:15rem 1fr;gap:3rem}}
+.cv-dates{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--brass-dim);margin-bottom:.5rem}
+.cv-firm{font-family:var(--display);font-size:1.25rem;font-weight:400;line-height:1.25;margin:0 0 .3rem}
+.cv-title{font-size:.85rem;color:#6B767C;line-height:1.45}
+.cv-body p{margin:0 0 1rem;font-size:.95rem;color:#3D4850}
+.cv-body ul{list-style:none;margin:0;padding:0}
+.cv-body li{position:relative;padding-left:1.2rem;margin-bottom:.7rem;font-size:.92rem;color:#4A555C;line-height:1.55}
+.cv-body li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:1px;background:var(--brass-dim)}
+.creds{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line-light);margin-top:0}
+@media(min-width:660px){.creds{grid-template-columns:1fr 1fr}}
+.cred{padding:1.3rem 0;border-bottom:1px solid var(--line-light)}
+@media(min-width:660px){
+  .cred{padding:1.4rem 2rem 1.4rem 0}
+  .cred:nth-child(even){padding-left:2rem;padding-right:0;border-left:1px solid var(--line-light)}
+}
+.cred-name{font-size:.95rem;color:var(--ink);margin:0 0 .25rem}
+.cred-meta{font-family:var(--mono);font-size:.72rem;color:var(--slate)}
+.pull{border-left:2px solid var(--brass);padding:0 0 0 1.6rem;margin:0 0 2.5rem}
+.pull-quote{font-family:var(--display);font-size:clamp(1.15rem,1rem + .7vw,1.45rem);
+  font-style:italic;line-height:1.45;color:var(--paper);margin:0 0 .8rem}
+.pull-src{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dim)}
 /* Tabs are a JS enhancement. Without JS the tab bar is hidden and every
    panel stacks vertically, so all content stays reachable. */
 .tabstrip{display:none}
@@ -465,6 +494,7 @@ body.js .panel.is-active{display:block}
     <div class="nav-links">
       <a class="nav-link is-current" href="#view-home">Home</a>
       <a class="nav-link" href="#view-methodology">Methodology</a>
+      <a class="nav-link" href="#view-about">About</a>
     </div>
     <a class="nav-cta" href="#contact">Book a call</a>
   </div>
@@ -1179,6 +1209,172 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
 </section>
 
 </div><!-- /view-methodology -->
+
+
+<!-- ═════════ ABOUT VIEW ═════════ -->
+<div id="view-about">
+
+<header class="pagehead">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--brass)">About</p>
+    <h1>I built this framework <em>before</em> I sold it.</h1>
+    <p>Yield Horizon exists because I spent nine years watching capital sit idle inside a EUR 8.5bn platform, and built the tools to measure what it was costing. ICC is not a consultant's theory. It is an internal discipline, productised.</p>
+
+    <div class="headline-figs">
+      <div><div class="hfig-val">16+</div><div class="hfig-lab">Years in private markets</div></div>
+      <div><div class="hfig-val">8.5bn</div><div class="hfig-lab">EUR platform overseen</div></div>
+      <div><div class="hfig-val">3</div><div class="hfig-lab">Jurisdictions, SPV platforms</div></div>
+      <div class="hfig--teal"><div class="hfig-val">FCA</div><div class="hfig-lab">ICAEW, qualified 2007</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="pull">
+      <p class="pull-quote">Developed frameworks for monitoring and benchmarking internal cost of capital across funds and investment structures, driving alignment of financing strategies with expected investment returns and liquidity profiles.</p>
+      <p class="pull-src">From my responsibilities at Oaktree Capital Management</p>
+    </div>
+    <p style="color:var(--slate-light);max-width:58ch;margin:0">That line is the origin of ClarityStack™. The framework was built inside a fund, for a fund, to answer a question the investment committee kept asking and the existing tools could not settle: given everything we have drawn, hedged and left sitting in a deposit account, what does the next euro actually cost?</p>
+  </div>
+</section>
+
+<section class="light">
+  <div class="wrap">
+    <p class="eyebrow">Background</p>
+    <h2>Twenty-one years, three sides of the same problem.</h2>
+    <p class="section-lede">Transaction diligence at KPMG, a global bank balance sheet at Citco, then nine years inside the treasury and structuring function of a major alternatives manager. The through-line is the plumbing: how capital is raised, financed, moved and accounted for.</p>
+
+    <div class="cv">
+
+      <article class="cv-role">
+        <div class="cv-meta">
+          <div class="cv-dates">2016 &ndash; 2025</div>
+          <h3 class="cv-firm">Oaktree Capital Management</h3>
+          <div class="cv-title">Senior Vice President, European Principal Group &middot; London</div>
+        </div>
+        <div class="cv-body">
+          <p>Financial oversight, structuring and liquidity strategy for approximately EUR 8.5bn across principal, private equity and debt opportunity funds.</p>
+          <ul>
+            <li>Built the internal cost of capital benchmarking frameworks that became ClarityStack™, aligning financing strategy with expected investment returns and liquidity profiles</li>
+            <li>Led negotiation, structuring and implementation of subscription line and NAV facilities supporting investment activity and working capital efficiency</li>
+            <li>Negotiated financing and risk documentation including ISDAs, CSA thresholds and ATE triggers</li>
+            <li>Developed and implemented a strategy-wide FX and interest rate hedging policy covering both investment-level and currency feeder exposures</li>
+            <li>Structured Solvency II-optimised rated feeders, fund-of-one vehicles, evergreen SMAs and sub-participation agreements</li>
+            <li>Built allocation models for SMA and FOO vehicles investing across multiple strategies and sleeves</li>
+            <li>Oversaw multi-jurisdictional SPV holding structures across Luxembourg, Dublin and Amsterdam</li>
+            <li>Advised portfolio managers on capital sourcing for deployment, distributions, financing repayments and collateral posting</li>
+            <li>Partnered with PwC on a firm-wide operational review benchmarking capabilities against peers, driving centralisation of middle-office functions</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cv-role">
+        <div class="cv-meta">
+          <div class="cv-dates">2009 &ndash; 2016</div>
+          <h3 class="cv-firm">The Citco Group of Companies</h3>
+          <div class="cv-title">Assistant Financial Director, Citco Banks &middot; London, Geneva, Amsterdam</div>
+        </div>
+        <div class="cv-body">
+          <p>Financial oversight of a global bank network carrying a USD 6&ndash;9bn balance sheet, with the regulatory and management reporting that goes with it.</p>
+          <ul>
+            <li>Directed finance teams of 15&ndash;20 across seven countries, delivering consolidated reporting under Basel II/III and CRD IV</li>
+            <li>Finance lead on a global banking system implementation (Temenos T24) and a group-wide Oracle ERP rollout</li>
+            <li>Led the carve-out of a USD 100m custody business, supporting refinancing and private equity investment processes involving Goldman Sachs, Stone Point Capital and General Atlantic</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cv-role">
+        <div class="cv-meta">
+          <div class="cv-dates">2004 &ndash; 2009</div>
+          <h3 class="cv-firm">KPMG LLP</h3>
+          <div class="cv-title">Associate, Transaction Services &middot; London</div>
+        </div>
+        <div class="cv-body">
+          <p>Financial due diligence on buy-side and sell-side transactions, including carve-outs and post-merger integration planning.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Why one person</p>
+    <h2>You get the person who built it.</h2>
+    <p class="section-lede">The obvious objection to a sole practitioner is capacity. The answer is that this work does not need a pyramid &mdash; it needs someone who has read a credit agreement, negotiated a CSA threshold, and had to explain a hedging policy to an investment committee.</p>
+
+    <div class="compare">
+      <div class="crow">
+        <div class="ckey">Who does the work</div>
+        <div class="cthem">A partner sells; associates two years out of university deliver.</div>
+        <div class="cus">The person in the pitch is <strong>the person in the model</strong>.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">The output</div>
+        <div class="cthem">A framework document requiring translation before anyone can use it.</div>
+        <div class="cus">A <strong>working Excel model</strong> calibrated to your LPA and credit agreement.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">The vantage point</div>
+        <div class="cthem">Advisory experience of fund finance, from outside.</div>
+        <div class="cus">Nine years <strong>inside</strong> a EUR 8.5bn platform, accountable for the outcome.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">On Big Four reviews</div>
+        <div class="cthem">&mdash;</div>
+        <div class="cus">I have <strong>commissioned one</strong>. I partnered with PwC on a firm-wide operational review at Oaktree, so I know what that process delivers and what it leaves you to finish yourself.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Qualifications</p>
+    <h2>Credentials.</h2>
+    <div class="creds">
+      <div class="cred">
+        <p class="cred-name">Fellow, Institute of Chartered Accountants in England and Wales</p>
+        <div class="cred-meta">FCA &middot; qualified 2007</div>
+      </div>
+      <div class="cred">
+        <p class="cred-name">ICAEW Business and Finance Professional</p>
+        <div class="cred-meta">BFP &middot; 2019</div>
+      </div>
+      <div class="cred">
+        <p class="cred-name">BA Business Administration, University of Nottingham</p>
+        <div class="cred-meta">2:1 Honours &middot; distinction dissertation</div>
+      </div>
+      <div class="cred">
+        <p class="cred-name">Based in London, covering the UK and Europe</p>
+        <div class="cred-meta">Available for on-site engagement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dl">
+  <div class="wrap dl-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--brass)">Next step</p>
+      <h2>Thirty minutes, one live deal.</h2>
+      <p>The quickest way to judge whether this is useful is to run it on a deal you are actually looking at. No preparation needed &mdash; bring the numbers and we will calculate the marginal ICC together.</p>
+      <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
+    </div>
+    <div>
+      <div class="spec-line"><span>Experience</span><span>16+ years, private markets</span></div>
+      <div class="spec-line"><span>Sector</span><span>Private equity &amp; private credit</span></div>
+      <div class="spec-line"><span>Specialism</span><span>Fund finance &amp; treasury</span></div>
+      <div class="spec-line"><span>Qualification</span><span>ICAEW, FCA</span></div>
+      <div class="spec-line" style="border-bottom:none"><span>Based</span><span>London, UK</span></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /view-about -->
 
 <footer>
   <div class="foot-in">
