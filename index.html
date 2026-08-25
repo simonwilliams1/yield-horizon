@@ -314,10 +314,13 @@ h2{
 footer{background:var(--ink-deep);border-top:1px solid var(--line-dark);padding:2rem 0}
 .foot-in{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);
   display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:1rem;font-size:.78rem;color:var(--slate)}
-.tagline{font-family:var(--display);font-style:italic;color:var(--slate-light)}
+.tagline{çfont-family:var(--display);font-style:italic;color:var(--slate-light)}
 @media(max-width:480px){
-  .tagline{order:-1}
-}
+  .foot-in{flex-direction:column;align-items:flex-start}
+  .foot-brand{display:contents}
+  .foot-logo{order:1}
+  .copyright{order:2}
+  }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
