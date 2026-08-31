@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yield Horizon — Know what your capital actually costs</title>
+<meta name="description" content="Dynamic cost-of-capital benchmarking for European private equity and credit GPs. ICC replaces the static hurdle rate with a defensible, marginal cost of deploying the next euro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:#131A1F;
+  --ink-deep:#0C1216;
+  --ink-raised:#1B252C;
+  --paper:#F4F5F3;
+  --paper-alt:#E8EAE6;
+  --brass:#D9A441;
+  --brass-dim:#8A6B2C;
+  --teal:#4A9D8F;
+  --slate:#7A8791;
+  --slate-light:#A8B3BA;
+  --line-dark:#26323A;
+  --line-light:#D2D6D0;
+
+  --display:"Newsreader",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+
+  --pad:clamp(1.25rem,5vw,4.5rem);
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  font-weight:300;
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.6875rem;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin:0 0 1.25rem;
+}
+.eyebrow--dark{color:var(--brass-dim)}
+
+/* ─── nav ─── */
+nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(19,26,31,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-dark);
+}
+.nav-in{
+  max-width:var(--maxw);margin:0 auto;padding:.9rem var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.brand{display:flex;align-items:baseline;gap:.6rem;text-decoration:none}
+.brand-mark{
+  font-family:var(--mono);font-size:.75rem;font-weight:600;letter-spacing:.06em;
+  color:var(--ink);background:var(--brass);
+  padding:.28rem .42rem;border-radius:2px;
+}
+.brand-name{font-family:var(--display);font-size:1.15rem;font-weight:400;letter-spacing:.01em}
+.nav-links{display:flex;gap:1.4rem;align-items:center}
+.nav-link{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;color:var(--slate-light);transition:color .25s;
+}
+.nav-link:hover{color:var(--brass)}
+@media(max-width:700px){.nav-links{display:none}}
+.nav-cta{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;color:var(--paper);
+  border:1px solid var(--line-dark);padding:.5rem .85rem;border-radius:2px;
+  transition:border-color .25s,color .25s;
+}
+.nav-cta:hover{border-color:var(--brass);color:var(--brass)}
+
+/* ─── hero ─── */
+.hero{padding:clamp(3.5rem,9vw,6.5rem) 0 clamp(3rem,7vw,5rem)}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:clamp(2.5rem,5vw,4rem)}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.02fr 1fr;align-items:start;gap:clamp(3rem,5vw,5rem)}}
+
+h1{
+  font-family:var(--display);
+  font-weight:300;
+  font-size:clamp(2.5rem,1.6rem + 4vw,4.2rem);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin:0 0 1.5rem;
+}
+h1 em{font-style:italic;color:var(--brass)}
+.hero-lede{
+  font-size:clamp(1.05rem,1rem + .35vw,1.2rem);
+  color:var(--slate-light);
+  max-width:36ch;
+  margin:0 0 2rem;
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.btn{
+  display:inline-block;text-decoration:none;
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;
+  padding:.85rem 1.4rem;border-radius:2px;transition:background .25s,color .25s,border-color .25s;
+}
+.btn--primary{background:var(--brass);color:var(--ink);font-weight:600}
+.btn--primary:hover{background:#E8B85C}
+.btn--ghost{border:1px solid var(--line-dark);color:var(--slate-light)}
+.btn--ghost:hover{border-color:var(--slate);color:var(--paper)}
+
+.hero-credential{
+  margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line-dark);
+  font-size:.9rem;color:var(--slate);max-width:38ch;
+}
+
+/* ─── SIGNATURE: crossing the line ─── */
+.stack{
+  background:var(--ink-deep);
+  border:1px solid var(--line-dark);
+  border-radius:3px;
+  padding:clamp(1.25rem,3vw,1.9rem);
+}
+.stack-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding-bottom:.9rem;margin-bottom:1.5rem;border-bottom:1px solid var(--line-dark);
+}
+.stack-title{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+.stack-sub{font-family:var(--mono);font-size:.7rem;color:var(--brass-dim);white-space:nowrap}
+
+/* segmented bar */
+.gauge{position:relative;margin-bottom:.55rem}
+.gauge-track{display:flex;height:26px;background:#182228;border-radius:2px;overflow:hidden}
+.seg{height:100%;width:0;transition:width 1.1s cubic-bezier(.22,.68,.28,1)}
+.seg--base{background:var(--brass-dim)}
+.seg--drag{background:var(--brass)}
+.marker{
+  position:absolute;top:-7px;bottom:-7px;left:92.2%;
+  width:1px;background:var(--teal);
+}
+.marker::after{
+  content:"";position:absolute;left:-3px;top:-3px;
+  width:7px;height:7px;background:var(--teal);border-radius:50%;
+}
+.gauge-scale{
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--slate);
+  margin-bottom:1.6rem;
+}
+.gauge-scale .hurdle-tag{color:var(--teal)}
+
+.legend{display:flex;gap:1.2rem;flex-wrap:wrap;font-size:.7rem;color:var(--slate);margin-bottom:1.5rem}
+.legend-item{display:flex;align-items:center;gap:.4rem}
+.legend-swatch{width:.6rem;height:.6rem;border-radius:1px;flex:none}
+
+.row{display:grid;grid-template-columns:1fr;gap:.28rem;margin-bottom:.8rem}
+.row-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.row-label{font-size:.8rem;color:var(--slate-light);font-weight:300}
+.row-val{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--paper);white-space:nowrap}
+.bar-track{height:5px;background:#182228;border-radius:1px;overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:1px;background:var(--brass-dim);
+  transition:width 1.1s cubic-bezier(.22,.68,.28,1)}
+.bar-fill--drag{background:var(--brass)}
+
+.stack-divider{height:1px;background:var(--line-dark);margin:1.3rem 0 1.1rem}
+
+.subtotal{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:1rem;
+}
+.subtotal span:last-child{text-transform:none;color:var(--slate-light);font-weight:500}
+
+.total{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}
+.total-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.total-fig{font-family:var(--mono);font-size:clamp(1.8rem,1.4rem + 1.7vw,2.4rem);font-weight:600;line-height:1;color:var(--brass)}
+.total-unit{font-family:var(--mono);font-size:.7rem;color:var(--slate);letter-spacing:.08em}
+
+.hurdle{margin-top:1.3rem;padding-top:1.05rem;border-top:1px dashed var(--line-dark)}
+.hurdle-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
+.hurdle-label{font-size:.8rem;color:var(--slate)}
+.hurdle-val{font-family:var(--mono);font-size:.8rem;color:var(--slate)}
+.gap-row{display:flex;justify-content:space-between;align-items:baseline}
+.gap-label{font-size:.85rem;color:var(--paper);font-weight:400}
+.gap-val{font-family:var(--mono);font-size:1.05rem;font-weight:600;color:var(--teal)}
+
+.stack-foot{
+  margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--line-dark);
+  font-size:.72rem;color:var(--slate);line-height:1.5;
+}
+.stack-foot a{color:var(--brass-dim)}
+
+/* ─── light sections ─── */
+.light{background:var(--paper);color:var(--ink)}
+.light .eyebrow{color:var(--brass-dim)}
+section{padding:clamp(3.5rem,8vw,6rem) 0}
+
+h2{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(1.9rem,1.4rem + 2vw,2.9rem);
+  line-height:1.12;letter-spacing:-.015em;margin:0 0 1.1rem;max-width:22ch;
+}
+.section-lede{font-size:1.05rem;color:#4A555C;max-width:58ch;margin:0 0 3rem}
+
+/* the invisible three */
+.costs{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line-light)}
+@media(min-width:760px){.costs{grid-template-columns:1fr 1fr}}
+.cost{padding:1.9rem 0;border-bottom:1px solid var(--line-light)}
+@media(min-width:760px){
+  .cost{padding:2rem 2.2rem 2rem 0}
+  .cost:nth-child(even){padding-left:2.2rem;padding-right:0;border-left:1px solid var(--line-light)}
+}
+.cost-fig{font-family:var(--mono);font-size:1.5rem;font-weight:600;color:var(--brass-dim);line-height:1;margin-bottom:.7rem}
+.cost-name{font-family:var(--display);font-size:1.3rem;font-weight:400;margin:0 0 .55rem}
+.cost-copy{font-size:.95rem;color:#4A555C;margin:0;max-width:42ch}
+
+/* the discipline argument */
+.proof{background:var(--ink);color:var(--paper)}
+.proof-grid{display:grid;grid-template-columns:1fr;gap:2.5rem;align-items:center}
+@media(min-width:880px){.proof-grid{grid-template-columns:1fr 1fr;gap:4.5rem}}
+.proof h2{color:var(--paper);max-width:20ch}
+.proof p{color:var(--slate-light);max-width:46ch;margin:0}
+.compare-box{border:1px solid var(--line-dark);background:var(--ink-deep);padding:1.8rem 1.6rem}
+.cb-row{margin-bottom:1.6rem}
+.cb-lab{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:.5rem}
+.cb-val{font-family:var(--mono);font-size:1.7rem;font-weight:600;line-height:1}
+.cb-val--small{color:var(--slate-light)}
+.cb-val--big{color:var(--brass)}
+.cb-note{font-size:.8rem;color:var(--slate);margin-top:.45rem}
+.cb-mult{
+  border-top:1px solid var(--line-dark);padding-top:1.3rem;margin-bottom:0;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.cb-mult-lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+.cb-mult-val{font-family:var(--mono);font-size:1.5rem;font-weight:600;color:var(--teal)}
+
+/* comparison */
+.compare{border-top:1px solid var(--line-light)}
+.crow{display:grid;grid-template-columns:1fr;gap:.35rem;padding:1.5rem 0;border-bottom:1px solid var(--line-light)}
+@media(min-width:760px){.crow{grid-template-columns:9rem 1fr 1fr;gap:2rem;align-items:baseline}}
+.ckey{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+.cthem{color:#6B767C;font-size:.95rem}
+.cus{color:var(--ink);font-size:.95rem;font-weight:400}
+.cus strong{font-weight:600}
+
+/* process */
+.steps{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:860px){.steps{grid-template-columns:repeat(4,1fr)}}
+.step{padding:1.6rem 0;border-top:2px solid var(--ink)}
+@media(min-width:860px){.step{padding:1.6rem 1.5rem 0 0}}
+.step-wk{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brass-dim);margin-bottom:.6rem}
+.step-name{font-family:var(--display);font-size:1.15rem;font-weight:400;margin:0 0 .5rem}
+.step-copy{font-size:.9rem;color:#4A555C;margin:0}
+
+/* fit */
+.fit-grid{display:grid;grid-template-columns:1fr;gap:2.5rem}
+@media(min-width:820px){.fit-grid{grid-template-columns:1fr 1fr;gap:3.5rem}}
+.fit h3{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  margin:0 0 1.2rem;padding-bottom:.7rem;border-bottom:1px solid var(--line-light)}
+.fit--yes h3{color:var(--teal)}
+.fit--no h3{color:#9A5B4A}
+.fit ul{list-style:none;margin:0;padding:0}
+.fit li{position:relative;padding-left:1.4rem;margin-bottom:.85rem;font-size:.95rem;color:#3D4850}
+.fit li::before{position:absolute;left:0;top:0;font-family:var(--mono);font-size:.9rem}
+.fit--yes li::before{content:"+";color:var(--teal)}
+.fit--no li::before{content:"–";color:#9A5B4A}
+
+/* pricing */
+.price-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line-light);border:1px solid var(--line-light)}
+@media(min-width:760px){.price-grid{grid-template-columns:repeat(3,1fr)}}
+.price{background:var(--paper);padding:1.9rem 1.6rem}
+.price-name{font-family:var(--display);font-size:1.2rem;margin:0 0 .3rem}
+.price-fig{font-family:var(--mono);font-size:1.35rem;font-weight:600;color:var(--ink);margin-bottom:.2rem}
+.price-term{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:1rem}
+.price-copy{font-size:.9rem;color:#4A555C;margin:0}
+
+/* close */
+.close{background:var(--ink-deep)}
+.close-grid{display:grid;grid-template-columns:1fr;gap:2.5rem}
+@media(min-width:860px){.close-grid{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:end}}
+.close h2{color:var(--paper);max-width:18ch}
+.close-lede{color:var(--slate-light);max-width:44ch;margin:0 0 2rem}
+.contact-line{display:flex;justify-content:space-between;gap:1rem;padding:.85rem 0;
+  border-bottom:1px solid var(--line-dark);font-size:.92rem}
+.contact-line span:first-child{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+.contact-line a{color:var(--brass);text-decoration:none}
+.contact-line a:hover{text-decoration:underline}
+
+footer{background:var(--ink-deep);border-top:1px solid var(--line-dark);padding:2rem 0}
+.foot-in{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.78rem;color:var(--slate)}
+.tagline{font-family:var(--display);font-style:italic;color:var(--slate-light)}
+@media(max-width:760px){
+  footer{padding:2.5rem 0 3rem}
+  .foot-in{flex-direction:column;align-items:flex-start;gap:0}
+  .tagline{order:-1;font-size:.95rem;line-height:1.5;padding-bottom:1.35rem;
+    border-bottom:1px solid var(--line-dark);width:100%;text-wrap:balance}
+  .foot-copy{padding-top:1.35rem;font-size:.72rem;line-height:1.6;color:#5F6A72;text-wrap:pretty}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+/* header */
+.pagehead{background:var(--ink);color:var(--paper);padding:clamp(3rem,7vw,5rem) 0 clamp(2.5rem,5vw,3.5rem)}
+.pagehead h1{font-size:clamp(2.2rem,1.6rem + 2.8vw,3.4rem);
+  line-height:1.08;letter-spacing:-.02em;margin:0 0 1.1rem;max-width:22ch}
+.pagehead h1 em{font-style:italic;color:var(--brass)}
+.pagehead p{color:var(--slate-light);max-width:58ch;margin:0}
+.headline-figs{display:flex;flex-wrap:wrap;gap:2.5rem;margin-top:2.5rem;padding-top:1.8rem;
+  border-top:1px solid var(--line-dark);align-items:flex-start}
+.hfig-val{font-family:var(--mono);font-size:1.7rem;font-weight:600;color:var(--brass);line-height:1}
+.hfig-lab{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);margin-top:.5rem}
+.hfig--teal .hfig-val{color:var(--teal)}
+.hfig-lab--wide{max-width:24ch}
+
+/* tabs */
+.tabstrip{background:var(--ink-deep);border-bottom:1px solid var(--line-dark);position:sticky;top:57px;z-index:50}
+.tabstrip-in{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);display:flex;gap:0;
+  overflow-x:auto;scrollbar-width:none}
+.tabstrip-in::-webkit-scrollbar{display:none}
+.tab{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  background:none;border:none;border-bottom:2px solid transparent;color:var(--slate);
+  padding:1rem .3rem;margin-right:1.9rem;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab:hover{color:var(--slate-light)}
+.tab[aria-selected="true"]{color:var(--brass);border-bottom-color:var(--brass)}
+
+/* panels */
+.panels{background:var(--paper);color:var(--ink)}
+.panel{display:none;padding:clamp(2.5rem,6vw,4rem) 0}
+.panel.is-active{display:block}
+.panel h2{font-family:var(--display);font-weight:300;font-size:clamp(1.6rem,1.3rem + 1.4vw,2.2rem);
+  line-height:1.15;letter-spacing:-.015em;margin:0 0 .9rem;max-width:26ch}
+.panel-lede{color:#4A555C;max-width:62ch;margin:0 0 2.5rem}
+
+/* sheet */
+.sheet{border:1px solid var(--line-light);background:#fff;overflow:hidden}
+.sheet-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  background:var(--ink);color:var(--paper);padding:.7rem 1.1rem}
+.sheet-name{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+.sheet-meta{font-family:var(--mono);font-size:.68rem;color:var(--slate)}
+.sheet-scroll{overflow-x:auto}
+.sheet table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:640px}
+.sheet caption{text-align:left;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--slate);padding:.9rem 1.1rem .3rem;background:#fff}
+.sheet thead th{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);font-weight:500;text-align:left;padding:.7rem 1.1rem;
+  border-bottom:1px solid var(--line-light);background:var(--paper-alt)}
+.sheet tbody td{padding:.62rem 1.1rem;border-bottom:1px solid #EDEFEB;vertical-align:top}
+.sheet tbody tr:hover{background:#FAFBF9}
+.sheet td.num{font-family:var(--mono);font-size:.82rem;white-space:nowrap;text-align:right}
+.sheet td.unit{font-family:var(--mono);font-size:.7rem;color:var(--slate);white-space:nowrap}
+.sheet td.note{color:#67727A;font-size:.8rem;line-height:1.5}
+.v-input{color:var(--cell-input);font-weight:500}
+.v-formula{color:var(--ink)}
+.v-link{color:var(--cell-link);font-weight:500}
+.v-toggle{color:var(--cell-toggle);font-weight:600;background:#FBF3DC;padding:.1rem .4rem;border-radius:2px}
+.sheet tr.section-row td{background:var(--ink);color:var(--brass);font-family:var(--mono);font-size:.66rem;
+  letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.1rem;border-bottom:none}
+.sheet tr.total-row td{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  font-weight:600;background:#FBFCFA}
+.sheet tr.total-row td.num{color:var(--ink);font-weight:600}
+.sheet tr.memo-row td{background:#FAFBF9;font-style:italic;color:#67727A}
+.sheet tr.memo-row td.num{font-style:normal}
+
+/* key */
+.key{display:flex;flex-wrap:wrap;gap:1.4rem;margin:1.4rem 0 0;padding:1rem 1.1rem;
+  background:var(--paper-alt);font-size:.78rem;color:#4A555C}
+.key-item{display:flex;align-items:center;gap:.45rem}
+.key-swatch{width:.65rem;height:.65rem;border-radius:1px;flex:none}
+
+/* formula block */
+.formula{background:var(--ink-deep);color:var(--paper);padding:1.6rem 1.4rem;margin:0 0 2.5rem;
+  font-family:var(--mono);font-size:.8rem;line-height:1.9;overflow-x:auto}
+.formula .op{color:var(--brass)}
+.formula .new{color:var(--teal);font-size:.72rem}
+
+/* callout */
+.callout{border-left:2px solid var(--brass);background:#FBF7EC;padding:1.2rem 1.4rem;margin:2.5rem 0;
+  font-size:.92rem;color:#4A4237}
+.callout strong{font-weight:600;color:var(--ink)}
+.callout--teal{border-left-color:var(--teal);background:#EFF6F4;color:#33544D}
+
+/* waterfall */
+.waterfall{margin:0 0 2.5rem;border:1px solid var(--line-light);background:#fff;padding:1.6rem 1.4rem}
+.wf-row{display:grid;grid-template-columns:1fr;gap:.3rem;margin-bottom:1rem}
+.wf-top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.wf-label{font-size:.85rem;color:#3D4850}
+.wf-val{font-family:var(--mono);font-size:.85rem;font-weight:500;white-space:nowrap}
+.wf-track{height:8px;background:var(--paper-alt);border-radius:1px;overflow:hidden}
+.wf-fill{height:100%;width:0;background:var(--brass-dim);border-radius:1px;
+  transition:width 1s cubic-bezier(.22,.68,.28,1)}
+.wf-fill--drag{background:var(--brass)}
+.wf-fill--nil{background:var(--line-light)}
+.wf-total{display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:1px solid var(--ink);padding-top:1rem;margin-top:1.4rem}
+.wf-total-lab{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
+.wf-total-val{font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--ink);line-height:1}
+
+
+/* download */
+.dl{background:var(--ink);color:var(--paper);padding:clamp(2.5rem,6vw,4rem) 0}
+.dl-grid{display:grid;grid-template-columns:1fr;gap:2rem}
+@media(min-width:820px){.dl-grid{grid-template-columns:1.2fr .8fr;gap:4rem;align-items:end}}
+.dl h2{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,1.4rem + 1.5vw,2.4rem);
+  margin:0 0 1rem;max-width:20ch;color:var(--paper)}
+.dl p{color:var(--slate-light);max-width:46ch;margin:0 0 1.8rem}
+.btn{display:inline-block;text-decoration:none;font-family:var(--mono);font-size:.78rem;
+  letter-spacing:.07em;text-transform:uppercase;padding:.85rem 1.4rem;border-radius:2px;
+  transition:background .25s,color .25s,border-color .25s}
+.btn--primary{background:var(--brass);color:var(--ink);font-weight:600}
+.btn--primary:hover{background:#E8B85C}
+.spec-line{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;
+  border-bottom:1px solid var(--line-dark);font-size:.88rem}
+.spec-line span:first-child{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--slate)}
+.spec-line span:last-child{color:var(--slate-light)}
+
+
+/* ─── view switching ─── */
+/* View switching — pure CSS, no JavaScript required */
+#view-methodology,#view-about{display:none}
+#view-methodology:target,#view-about:target{display:block}
+body:has(#view-methodology:target) #view-home,
+body:has(#view-about:target) #view-home{display:none}
+body:has(#view-methodology:target) .nav-link[href="#view-methodology"],
+body:has(#view-about:target) .nav-link[href="#view-about"]{color:var(--brass)}
+body:has(#view-methodology:target) .nav-link[href="#view-home"],
+body:has(#view-about:target) .nav-link[href="#view-home"]{color:var(--slate-light)}
+
+/* ─── About page ─── */
+.about-grid{display:grid;grid-template-columns:1fr;gap:clamp(2rem,4vw,3rem)}
+@media(min-width:900px){.about-grid{grid-template-columns:1.15fr .85fr;gap:clamp(2.5rem,5vw,4.5rem);align-items:start}}
+.portrait{position:relative;max-width:340px}
+@media(max-width:899px){.portrait{max-width:230px}}
+.portrait img{display:block;width:100%;height:auto;border-radius:2px;
+  filter:contrast(1.02)}
+.portrait::after{content:"";position:absolute;inset:0;border-radius:2px;
+  box-shadow:inset 0 0 0 1px rgba(216,164,65,.22);pointer-events:none}
+.portrait-cap{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--slate);margin-top:.9rem;line-height:1.6}
+.portrait-cap strong{display:block;color:var(--paper);font-weight:500;letter-spacing:.06em;margin-bottom:.25rem}
+.cv{border-top:1px solid var(--line-light)}
+.cv-role{display:grid;grid-template-columns:1fr;gap:.6rem;padding:2.2rem 0;
+  border-bottom:1px solid var(--line-light)}
+@media(min-width:860px){.cv-role{grid-template-columns:15rem 1fr;gap:3rem}}
+.cv-dates{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--brass-dim);margin-bottom:.5rem}
+.cv-firm{font-family:var(--display);font-size:1.25rem;font-weight:400;line-height:1.25;margin:0 0 .3rem}
+.cv-title{font-size:.85rem;color:#6B767C;line-height:1.45}
+.cv-loc{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:#8A939A;margin-top:.4rem}
+.cv-body p{margin:0 0 1rem;font-size:.95rem;color:#3D4850}
+.cv-body ul{list-style:none;margin:0;padding:0}
+.cv-body li{position:relative;padding-left:1.2rem;margin-bottom:.7rem;font-size:.92rem;color:#4A555C;line-height:1.55}
+.cv-body li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:1px;background:var(--brass-dim)}
+.creds{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--line-light);margin-top:0}
+@media(min-width:660px){.creds{grid-template-columns:1fr 1fr}}
+
+.cred{padding:1.3rem 0;border-bottom:1px solid var(--line-light)}
+@media(min-width:660px){
+  .cred{padding:1.4rem 2rem 1.4rem 0}
+  .cred:nth-child(even){padding-left:2rem;padding-right:0;border-left:1px solid var(--line-light)}
+}
+.cred-name{font-size:.95rem;color:var(--ink);margin:0 0 .25rem}
+.cred-meta{font-family:var(--mono);font-size:.72rem;color:var(--slate)}
+.pull{border-left:2px solid var(--brass);padding:0 0 0 1.6rem;margin:0 0 2.5rem}
+.pull-quote{font-family:var(--display);font-size:clamp(1.15rem,1rem + .7vw,1.45rem);
+  font-style:italic;line-height:1.45;color:var(--paper);margin:0 0 .8rem}
+.pull-src{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-dim)}
+/* Tabs are a JS enhancement. Without JS the tab bar is hidden and every
+   panel stacks vertically, so all content stays reachable. */
+.tabstrip{display:none}
+body.js .tabstrip{display:block}
+body.js .panel{display:none}
+body.js .panel.is-active{display:block}
+.light .eyebrow{color:var(--brass-dim)}
+.nav-link.is-current{color:var(--brass)}
+.btn{cursor:pointer}
+.btn--ghost{border:1px solid var(--line-dark);background:none}
+.btn--ghost:hover{border-color:var(--slate)}
+:root{--cell-input:#1D4E89;--cell-link:#2E7D64;--cell-toggle:#8A6B2C}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#view-home">
+      <span class="brand-mark">YH</span>
+      <span class="brand-name">Yield Horizon</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link is-current" href="#view-home">Home</a>
+      <a class="nav-link" href="#view-methodology">Methodology</a>
+      <a class="nav-link" href="#view-about">About</a>
+    </div>
+    <a class="nav-cta" href="#contact">Book a call</a>
+  </div>
+</nav>
+
+<!-- ═════════ HOME VIEW ═════════ -->
+<div id="view-home">
+<div id="top" class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Cost of capital — private equity &amp; credit</p>
+      <h1>Your hurdle rate only <em>looks</em> conservative.</h1>
+      <p class="hero-lede">An 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both &mdash; and the headroom is gone.</p>
+      <div class="hero-actions">
+        <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
+        <a class="btn btn--ghost" href="#view-methodology">See the calculation</a>
+      </div>
+      <p class="hero-credential">Built by a fund finance and treasury practitioner &mdash; nine years across European private equity and private debt funds at Oaktree, before that Citco and KPMG. Not a consultancy pyramid.</p>
+    </div>
+
+    <!-- SIGNATURE ELEMENT -->
+    <div class="stack" id="stack">
+      <div class="stack-head">
+        <span class="stack-title">Marginal ICC — worked example</span>
+        <span class="stack-sub">EUR 500mm fund</span>
+      </div>
+
+      <div class="gauge">
+        <div class="gauge-track">
+          <div class="seg seg--base" data-w="83.8" style="width:83.8%"></div>
+          <div class="seg seg--drag" data-w="7.2" style="width:7.2%"></div>
+          <div class="seg seg--drag" data-w="2.1" style="width:2.1%"></div>
+          <div class="seg seg--drag" data-w="6.8" style="width:6.8%"></div>
+        </div>
+        <div class="marker" aria-hidden="true"></div>
+      </div>
+      <div class="gauge-scale">
+        <span>0</span>
+        <span class="hurdle-tag">↑ static hurdle 800</span>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--brass-dim)"></span> Funding cost</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--brass)"></span> Costs the hurdle never sees</div>
+      </div>
+
+      <div class="row">
+        <div class="row-top"><span class="row-label">LP capital &mdash; 60% at 8.00%</span><span class="row-val" data-count="480">480 bps</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="55.3" style="width:55.3%"></div></div>
+      </div>
+      <div class="row">
+        <div class="row-top"><span class="row-label">Subscription line &mdash; 30% at 5.20%</span><span class="row-val" data-count="156">156 bps</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="18" style="width:18%"></div></div>
+      </div>
+      <div class="row">
+        <div class="row-top"><span class="row-label">NAV facility &mdash; 10% at 9.10%</span><span class="row-val" data-count="91">91 bps</span></div>
+        <div class="bar-track"><div class="bar-fill" data-w="10.5" style="width:10.5%"></div></div>
+      </div>
+      <div class="subtotal"><span>Weighted funding cost</span><span data-count="727">727 bps</span></div>
+
+      <div class="stack-divider"></div>
+      <p class="eyebrow eyebrow--dark" style="margin-bottom:1rem">What the hurdle rate misses</p>
+
+      <div class="row">
+        <div class="row-top"><span class="row-label">Net idle capital drag</span><span class="row-val" data-count="63">63 bps</span></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="7.2" style="width:7.2%"></div></div>
+      </div>
+      <div class="row">
+        <div class="row-top"><span class="row-label">Management fee drag</span><span class="row-val" data-count="18">18 bps</span></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="2.1" style="width:2.1%"></div></div>
+      </div>
+      <div class="row">
+        <div class="row-top"><span class="row-label">Drawn capital opportunity cost</span><span class="row-val" data-count="59">59 bps</span></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="6.8" style="width:6.8%"></div></div>
+      </div>
+
+      <div class="subtotal"><span>Invisible cost &mdash; never invoiced</span><span data-count="140">140 bps</span></div>
+
+      <div class="stack-divider"></div>
+      <div class="total">
+        <span class="total-label">Marginal ICC</span>
+        <span><span class="total-fig" data-count="868">868</span> <span class="total-unit">bps</span></span>
+      </div>
+
+      <div class="hurdle">
+        <div class="hurdle-row"><span class="hurdle-label">Static hurdle rate</span><span class="hurdle-val">800 bps</span></div>
+        <div class="gap-row"><span class="gap-label">Capital underpriced by</span><span class="gap-val" data-count="68">68 bps</span></div>
+      </div>
+
+      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the plain-English glossary if the terms are unfamiliar.</p>
+    </div>
+  </div>
+</div>
+
+<section class="light" id="what">
+  <div class="wrap">
+    <p class="eyebrow">The invisible 140</p>
+    <h2>Three costs that never reach the investment committee.</h2>
+    <p class="section-lede">We call them invisible because nobody invoices for them. A bank bills you for interest and it lands in the accounts; nobody bills you for the profit you failed to make while capital sat waiting. Both are real money. Only one gets counted &mdash; and the uncounted ones arise from <em>timing</em> rather than pricing, which is why a hurdle rate set once at fund formation cannot possibly capture them.</p>
+
+    <div class="costs">
+      <div class="cost">
+        <div class="cost-fig">727 bps</div>
+        <h3 class="cost-name">Weighted funding cost</h3>
+        <p class="cost-copy">LP preferred return, subscription line and NAV facility, blended by their real share of the next drawdown. Conventional, well understood, and comfortably below a typical 800bps hurdle.</p>
+      </div>
+      <div class="cost">
+        <div class="cost-fig">63 bps</div>
+        <h3 class="cost-name">Net idle capital drag</h3>
+        <p class="cost-copy">Preferred return compounds from the call date, not the deployment date. Ninety days of idle capital costs EUR 4.2m gross &mdash; EUR 2.5m after deposit interest, and only if the LPA permits placement at all.</p>
+      </div>
+      <div class="cost">
+        <div class="cost-fig">18 bps</div>
+        <h3 class="cost-name">Management fee drag</h3>
+        <p class="cost-copy">On an AuM basis, fees accrue on capital that has been called but is doing nothing. On a commitment basis they do not. The model switches between the two rather than assuming one.</p>
+      </div>
+      <div class="cost">
+        <div class="cost-fig">59 bps</div>
+        <h3 class="cost-name">Drawn capital opportunity cost</h3>
+        <p class="cost-copy">Facilities drawn ahead of deployment cost you the interest on the borrowing and the return that capital was not earning. Treasury systems capture the first because someone invoices for it. Nobody invoices for the second.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap proof-grid">
+    <div>
+      <p class="eyebrow">The discipline argument</p>
+      <h2>What gets measured is the smaller number.</h2>
+      <p>EUR 60m drawn seventy-five days ahead of deployment. The interest on that borrowing is invoiced, booked and visible &mdash; EUR 641,096. The return that capital was not earning while it sat there is neither invoiced nor booked, and it is nearly three times larger. Both are real. Only one shows up.</p>
+    </div>
+    <div class="compare-box">
+      <div class="cb-row">
+        <div class="cb-lab">What treasury books</div>
+        <div class="cb-val cb-val--small">EUR 641,096</div>
+        <div class="cb-note">Facility interest at 5.20% for 75 days</div>
+      </div>
+      <div class="cb-row">
+        <div class="cb-lab">What it actually costs</div>
+        <div class="cb-val cb-val--big">EUR 2,367,123</div>
+        <div class="cb-note">Facility interest plus forgone deployment return at 14.00%</div>
+      </div>
+      <div class="cb-mult">
+        <span class="cb-mult-lab">Understated by</span>
+        <span class="cb-mult-val">3.7×</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light">
+  <div class="wrap">
+    <p class="eyebrow">Where ICC sits</p>
+    <h2>WACC values the portfolio. ICC prices the decision.</h2>
+    <p class="section-lede">ICC does not replace your valuation work. It sits earlier &mdash; a gate before IC approval, and an audit trail afterwards.</p>
+
+    <div class="compare">
+      <div class="crow">
+        <div class="ckey">Anchor</div>
+        <div class="cthem">WACC and CAPM derive from public market data and equity beta.</div>
+        <div class="cus">ICC derives from <strong>your</strong> LPA, facility pricing and drawdown log.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">Frequency</div>
+        <div class="cthem">Refreshed annually, sometimes quarterly.</div>
+        <div class="cus">Recalculated <strong>at the point of approval</strong>.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">Basis</div>
+        <div class="cthem">Average cost across the whole capital base.</div>
+        <div class="cus"><strong>Marginal</strong> cost of the next euro deployed.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">Output</div>
+        <div class="cthem">A framework requiring translation before use.</div>
+        <div class="cus">One line in the IC memo, with the <strong>workings visible</strong>.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Delivery</p>
+    <h2>Six weeks, start to IC-ready.</h2>
+    <p class="section-lede">The sequence is fixed because each stage depends on the one before it. Discovery sets the inputs; the build encodes them; the pilot proves them against live deals.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-wk">Weeks 1–2</div>
+        <h3 class="step-name">Discovery</h3>
+        <p class="step-copy">Capital structure mapping across LPA, credit agreements and hedging policy. Deployment pattern and idle capital audit.</p>
+      </div>
+      <div class="step">
+        <div class="step-wk">Weeks 3–4</div>
+        <h3 class="step-name">Build</h3>
+        <p class="step-copy">ClarityStack™ calibrated to your fund. Capital source decision matrix integrated into the treasury playbook. IC memo template with an ICC field.</p>
+      </div>
+      <div class="step">
+        <div class="step-wk">Weeks 5–6</div>
+        <h3 class="step-name">Pilot</h3>
+        <p class="step-copy">Live test across three to five deals. Variance analysis against your existing hurdle and against realised cost.</p>
+      </div>
+      <div class="step">
+        <div class="step-wk">Ongoing</div>
+        <h3 class="step-name">Institutionalise</h3>
+        <p class="step-copy">Quarterly reporting, annual policy refresh, and LP-facing materials where capital allocation rigour is worth demonstrating.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Engagement</p>
+    <h2>Priced against the drag it removes.</h2>
+    <p class="section-lede">On the worked example above, the invisible 140 basis points represent roughly EUR 5.6m of cost across a EUR 400m deployment window. The pilot costs a fraction of one basis point of that.</p>
+
+    <div class="price-grid">
+      <div class="price">
+        <h3 class="price-name">Pilot</h3>
+        <div class="price-fig">EUR 15–25k</div>
+        <div class="price-term">4–6 weeks · capped scope</div>
+        <p class="price-copy">Calibrated ICC model, IC memo template, three-deal pilot against defined success criteria.</p>
+      </div>
+      <div class="price">
+        <h3 class="price-name">Full integration</h3>
+        <div class="price-fig">EUR 35–50k</div>
+        <div class="price-term">Includes annual refresh</div>
+        <p class="price-copy">Everything in the pilot, plus treasury playbook integration, scenario modelling and LP reporting materials.</p>
+      </div>
+      <div class="price">
+        <h3 class="price-name">Retained support</h3>
+        <div class="price-fig">EUR 5–10k</div>
+        <div class="price-term">Per quarter · optional</div>
+        <p class="price-copy">Policy updates, scenario work on live deals, and recalibration as facility terms change.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Fit</p>
+    <h2>This works for some funds and not others.</h2>
+    <p class="section-lede">Worth establishing early. A short call is usually enough to tell which side you are on.</p>
+
+    <div class="fit-grid">
+      <div class="fit fit--yes">
+        <h3>Strong fit</h3>
+        <ul>
+          <li>EUR 1–10bn European private equity or credit, with a real treasury function</li>
+          <li>A CFO or COO willing to sponsor the work rather than delegate it downward</li>
+          <li>An investment committee that already applies quantitative gates</li>
+          <li>Active use of subscription lines, NAV facilities or multi-currency deployment</li>
+          <li>Preference for operational rigour over presentation</li>
+        </ul>
+      </div>
+      <div class="fit fit--no">
+        <h3>Poor fit</h3>
+        <ul>
+          <li>Treasury fully outsourced to the fund administrator</li>
+          <li>Investment committee process that is purely qualitative</li>
+          <li>Entirely evergreen LP base with no preferred return or call mechanics</li>
+          <li>Mid-fundraise and looking for optics rather than substance</li>
+          <li>Expecting a deck rather than a working model</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close" id="contact">
+  <div class="wrap close-grid">
+    <div>
+      <p class="eyebrow">Next step</p>
+      <h2>Bring one live deal.</h2>
+      <p class="close-lede">Thirty minutes, your numbers, no preparation needed. We calculate the marginal ICC on a deal you are actually looking at and compare it to the threshold you would otherwise have used. If the gap is not material, that is a useful answer too.</p>
+    </div>
+    <div><div class="contact-line"><span>Experience</span><span style="color:var(--slate-light)">16+ years, private markets</span></div>
+ <a class="btn btn--primary" href="mailto:simon@yieldhorizon.co.uk?subject=ICC%20diagnostic%20call">Book a diagnostic</a>
+<div class="contact-line"><span>Sector</span><span style="color:var(--slate-light)">European PE and Private Debt</span></div>
+<div class="contact-line"><span>Specialism</span><span style="color:var(--slate-light)">Fund Finance and Treasury</span></div>
+<div class="contact-line"><span>Qualification</span><span style="color:var(--slate-light)">ICAEW, FCA</span></div>
+<div class="contact-line"><span>Based</span><span style="color:var(--slate-light)">London, UK</span></div>
+<div class="contact-line"><span>Coverage</span><span style="color:var(--slate-light)">UK &amp; Europe</span></div>
+<div class="contact-line" style="border-bottom:none"><span>Response</span><span style="color:var(--slate-light)">Within one working day</span></div>
+    <div class="contact-line"><span>Email</span><a href="mailto:simon@yieldhorizon.co.uk">simon@yieldhorizon.co.uk</a></div>
+   <div class="contact-line"><span>LinkedIn</span><a href="https://www.linkedin.com/company/yieldhorizonltd/?viewAsMember=true" target="_blank" rel="noopener noreferrer">Yield Horizon</a></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /view-home -->
+
+<!-- ═════════ METHODOLOGY VIEW ═════════ -->
+<div id="view-methodology">
+<header class="pagehead">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--brass)">ClarityStack™ v1.2 — five-component methodology</p>
+    <h1>The calculation, shown in <em>full</em>.</h1>
+    <p>Nothing here is a black box. Every input has a stated source, every component has visible logic, and the two judgement variables are labelled as judgement variables. This is the working model, run on an illustrative EUR 500mm fund.</p>
+
+    <div class="headline-figs">
+      <div>
+        <div class="hfig-val">868</div>
+        <div class="hfig-lab">Marginal ICC (bps)</div>
+      </div>
+      <div>
+        <div class="hfig-val">800</div>
+        <div class="hfig-lab">Static hurdle (bps)</div>
+      </div>
+      <div class="hfig--teal">
+        <div class="hfig-val">+68</div>
+        <div class="hfig-lab">Hurdle understates by</div>
+      </div>
+      <div class="hfig--teal">
+        <div class="hfig-val">+552</div>
+        <div class="hfig-lab">Deal spread over ICC</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="tabstrip">
+  <div class="tabstrip-in" role="tablist" aria-label="Workbook sheets">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Plain English</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-readme" id="t-readme">Readme</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-inputs" id="t-inputs">Inputs</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-calc" id="t-calc">ICC Calculation</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-out" id="t-out">IC Output</button>
+  </div>
+</div>
+
+<div class="panels">
+<!-- README -->
+<div class="panel is-active" id="p-plain" role="tabpanel" aria-labelledby="t-plain">
+  <div class="wrap">
+    <h2>Start here if the jargon is unfamiliar.</h2>
+    <p class="panel-lede">This page is written for finance specialists, but the underlying idea is simple and worth understanding without the vocabulary. Here is the whole thing in ordinary language, followed by definitions of every term used elsewhere on the site.</p>
+
+    <div class="callout">
+      <strong>The idea in one paragraph.</strong> A private equity fund raises money from investors and borrows from banks. That money is not free &mdash; investors are promised a return and banks charge interest. Before the fund invests in a company, it should check that the expected profit beats what the money is costing. Most funds check against a fixed figure chosen years earlier, usually 8%. That figure ignores several real costs, so it flatters every decision made against it. This model calculates the true, current cost instead.
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-bar">
+        <span class="sheet-name">Where the money comes from</span>
+        <span class="sheet-meta">The three funding sources, and what each costs</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:26%">Term</th><th style="width:16%" class="num">In this example</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr><td>LP capital</td><td class="num v-formula">60% at 8.00%</td><td class="note">Money from the fund's investors &mdash; pension schemes, insurers, wealthy families. "LP" means limited partner. They are promised a minimum return, called the <em>preferred return</em>, before the fund manager earns anything. Here that promise is 8% a year. It is the most expensive money in the mix.</td></tr>
+            <tr><td>Subscription line</td><td class="num v-formula">30% at 5.20%</td><td class="note">A bank loan secured against investors' unfulfilled promises to pay. Cheap, short-term, and used to move quickly on a deal before asking investors for cash. Sometimes shortened to "sub line".</td></tr>
+            <tr><td>NAV facility</td><td class="num v-formula">10% at 9.10%</td><td class="note">A bank loan secured against the companies the fund already owns. "NAV" is net asset value &mdash; what those holdings are worth. More expensive than a subscription line because the bank is taking more risk.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sheet" style="margin-top:2rem">
+      <div class="sheet-bar">
+        <span class="sheet-name">The vocabulary</span>
+        <span class="sheet-meta">Every term used on this site</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:26%">Term</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr class="section-row"><td colspan="2">Measurement</td></tr>
+            <tr><td>Basis point (bps)</td><td class="note">One hundredth of one percent. 100 bps = 1%. Used because in finance the difference between 8.00% and 8.68% matters enormously, and "68 basis points" is clearer than "nought point six eight percent".</td></tr>
+            <tr><td>Annualised</td><td class="note">A cost expressed as if it ran for a full year, so figures covering different periods can be compared. A 90-day cost is annualised by scaling it: 90 &divide; 365.</td></tr>
+            <tr><td>Marginal cost</td><td class="note">The cost of the <em>next</em> unit, rather than the average across everything so far. It matters because decisions are always about what to do next, and the next euro can cost quite a lot more than the average euro already spent.</td></tr>
+
+            <tr class="section-row"><td colspan="2">The decision</td></tr>
+            <tr><td>Hurdle rate</td><td class="note">The minimum return an investment must promise before the fund will consider it. Traditionally a fixed number set when the fund launched &mdash; typically 6% to 8% &mdash; and left unchanged for years.</td></tr>
+            <tr><td>ICC</td><td class="note">Internal Cost of Capital. What this model produces: the true, current, all-in cost of deploying the next euro. It replaces the fixed hurdle rate with a figure that reflects what is actually happening in the fund today.</td></tr>
+            <tr><td>IRR</td><td class="note">Internal rate of return &mdash; the annualised profit a deal is expected to make, as a percentage. If a deal's IRR is 14.2% and the ICC is 8.68%, the deal earns 5.52 percentage points more than the money costs.</td></tr>
+            <tr><td>Spread</td><td class="note">The gap between two rates. Here, the deal's expected return minus the cost of the capital funding it. A positive spread means the deal creates value; a negative one means it destroys value however profitable it looks in isolation.</td></tr>
+            <tr><td>Investment committee (IC)</td><td class="note">The group inside the fund that approves or rejects proposed investments. The ICC figure is designed to go into the paperwork they review.</td></tr>
+
+            <tr class="section-row"><td colspan="2">The costs the hurdle rate misses</td></tr>
+            <tr><td>Drag</td><td class="note">A cost that reduces returns without anyone deciding to incur it. It arises from <em>timing</em> &mdash; money sitting still, borrowed too early, or charged fees while doing nothing &mdash; rather than from the price of anything.</td></tr>
+            <tr><td>Invisible cost</td><td class="note">Our term for drag that never appears on an invoice or in an accounting system, and so is rarely counted. Nobody bills a fund for the profit it failed to make while capital sat waiting, but that failure is as real as any interest payment. In the worked example these costs total 140 basis points &mdash; about a sixth of the fund's true cost of capital.</td></tr>
+            <tr><td>Called capital</td><td class="note">Money the fund has formally requested from its investors and now holds. From the moment it is called, the 8% preferred return starts accruing &mdash; whether or not it has been invested in anything.</td></tr>
+            <tr><td>Idle capital</td><td class="note">Called capital that has arrived but not yet been invested. It is costing 8% a year and earning perhaps 3.4% in a deposit account. The difference is pure loss, and it is the largest of the invisible costs.</td></tr>
+            <tr><td>Deployment</td><td class="note">Actually investing the money in a company. "Undeployed" means the cash is sitting in an account rather than working.</td></tr>
+            <tr><td>Commitment fee</td><td class="note">A small charge banks levy on the <em>unused</em> portion of a loan facility &mdash; payment for keeping the money available. Here 0.50% a year.</td></tr>
+            <tr><td>Facility interest</td><td class="note">The interest paid to a bank on borrowed money during the period before it is put to work. Real, invoiced, and usually the only part of the waiting cost anyone records.</td></tr>
+            <tr><td>Carried interest</td><td class="note">Confusingly, "carry" in private equity means something else entirely: the fund manager's share of the profits, typically 20% of gains above the preferred return. It is not a cost of capital and plays no part in this model. Mentioned here only so the term is not mistaken for facility interest.</td></tr>
+            <tr><td>Opportunity cost</td><td class="note">The value of the thing you did not do. If capital sat in an account for 75 days instead of earning 14% in an investment, that forgone 14% is an opportunity cost. It never appears in the accounts, which is precisely why it gets ignored.</td></tr>
+
+            <tr class="section-row"><td colspan="2">Fund mechanics</td></tr>
+            <tr><td>LPA</td><td class="note">Limited partnership agreement &mdash; the contract between the fund manager and its investors. It sets the preferred return, the fees, and what the manager may do with cash that is waiting to be invested.</td></tr>
+            <tr><td>Management fee</td><td class="note">An annual charge, here 1.50%, paid to the fund manager for running the fund. Charged either on the total investors committed, or on the value of what the fund currently holds.</td></tr>
+            <tr><td>Commitments vs AuM basis</td><td class="note">Two ways of calculating that fee. On a <em>commitments</em> basis it is charged on the full amount investors promised, so it does not change with deployment. On an <em>AuM</em> basis (assets under management) it is charged on current holdings, which means the fund pays fees on capital sitting idle. Only the second creates drag.</td></tr>
+            <tr><td>GP</td><td class="note">General partner &mdash; the firm managing the fund and making the investment decisions. The client for this work.</td></tr>
+            <tr><td>Hedging / FX</td><td class="note">Protecting against currency movements when investing abroad. A euro fund buying a US business can either borrow dollars directly or borrow euros and use a currency contract. The two routes cost different amounts, and the model picks the cheaper.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout callout--teal">
+      <strong>Why any of this matters.</strong> In the worked example the fund believes its capital costs 8%. It actually costs 8.68%. That gap is small enough to sound trivial and large enough to matter: on a EUR 400m deployment programme, 68 basis points is roughly EUR 2.7m of cost the fund had not counted. Deals approved in that gap looked profitable and were not.
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="p-readme" role="tabpanel" aria-labelledby="t-readme">
+  <div class="wrap">
+    <h2>What the model does, and what it will not do.</h2>
+    <p class="panel-lede">ClarityStack calculates the marginal cost of deploying the next unit of capital, for use as a pre-approval gate at investment committee. It replaces a static 6&ndash;8% hurdle rate with a live, audit-trailed threshold.</p>
+
+    <div class="formula">
+Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Net Idle Capital Drag <span class="new">— v1.2: nets off idle cash yield</span><br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> FX Sourcing Cost (optimised) <span class="new">— v1.2: lower of direct draw vs hedged</span><br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Management Fee Drag Adjustment<br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Drawn Capital Opportunity Cost <span class="new">— v1.2: new component</span>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-bar">
+        <span class="sheet-name">Two gating conditions</span>
+        <span class="sheet-meta">Confirm before switching either toggle on</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <caption>Neither should be assumed. Both change the answer materially.</caption>
+          <thead><tr><th style="width:30%">Condition</th><th style="width:44%">What must be confirmed</th><th>Where</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Multi-currency draw</td>
+              <td class="note">The credit agreement supports drawing in the target currency, at transparent per-currency pricing.</td>
+              <td class="note">Credit agreement</td>
+            </tr>
+            <tr>
+              <td>Idle cash placement</td>
+              <td class="note">The LPA permits called-but-undeployed capital to be held in interest-bearing accounts.</td>
+              <td class="note">Limited partnership agreement</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Why the toggles default to off.</strong> Both conditions are commonly assumed to be true and frequently are not. A fund that cannot place idle cash under its LPA has a materially higher net idle drag than one that can &mdash; in this worked example the difference is 168 basis points of gross drag. Assuming the permission exists produces a flattering number that does not survive diligence.
+    </div>
+
+    <div class="key">
+      <div class="key-item"><span class="key-swatch" style="background:var(--cell-input)"></span> Hardcoded input &mdash; editable</div>
+      <div class="key-item"><span class="key-swatch" style="background:var(--ink)"></span> Formula &mdash; do not overwrite</div>
+      <div class="key-item"><span class="key-swatch" style="background:var(--cell-link)"></span> Cross-tab link</div>
+      <div class="key-item"><span class="key-swatch" style="background:#FBF3DC;border:1px solid var(--cell-toggle)"></span> Judgement variable &mdash; confirm before relying on output</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INPUTS ══ -->
+<div class="panel" id="p-inputs" role="tabpanel" aria-labelledby="t-inputs">
+  <div class="wrap">
+    <h2>Every input carries its source.</h2>
+    <p class="panel-lede">Twenty-three inputs, each labelled with the document it comes from. Where a figure is a judgement rather than an observable rate, it says so. The worked example below is an illustrative EUR 500mm fund.</p>
+
+    <div class="sheet">
+      <div class="sheet-bar">
+        <span class="sheet-name">Inputs</span>
+        <span class="sheet-meta">Edit blue cells only</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:31%">Input</th><th style="width:15%" class="num">Value</th><th style="width:8%">Unit</th><th>Basis / source</th></tr></thead>
+          <tbody>
+            <tr class="section-row"><td colspan="4">1 &nbsp;Fund parameters</td></tr>
+            <tr><td>Fund size (commitments)</td><td class="num v-input">500,000,000</td><td class="unit">EUR</td><td class="note">LPA / final close documentation</td></tr>
+            <tr><td>Fund base currency</td><td class="num v-input">EUR</td><td class="unit"></td><td class="note">LPA</td></tr>
+
+            <tr class="section-row"><td colspan="4">2 &nbsp;Capital source mix</td></tr>
+            <tr><td>LP capital &mdash; mix %</td><td class="num v-input">60.0%</td><td class="unit">%</td><td class="note">Deployment plan / treasury forecast</td></tr>
+            <tr><td>LP capital &mdash; cost (pref rate)</td><td class="num v-input">8.00%</td><td class="unit">%</td><td class="note">LPA preferred return</td></tr>
+            <tr><td>Sub line &mdash; mix %</td><td class="num v-input">30.0%</td><td class="unit">%</td><td class="note">Deployment plan / treasury forecast</td></tr>
+            <tr><td>Sub line &mdash; all-in cost</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Credit agreement: SOFR/EURIBOR + margin</td></tr>
+            <tr><td>NAV facility &mdash; mix %</td><td class="num v-input">10.0%</td><td class="unit">%</td><td class="note">Deployment plan / treasury forecast</td></tr>
+            <tr><td>NAV facility &mdash; all-in cost</td><td class="num v-input">9.10%</td><td class="unit">%</td><td class="note">NAV facility agreement</td></tr>
+            <tr class="total-row"><td>Mix check</td><td class="num">100.0%</td><td class="unit">%</td><td class="note">If this is not 100%, weighted cost is under- or overstated</td></tr>
+
+            <tr class="section-row"><td colspan="4">3 &nbsp;Idle capital</td></tr>
+            <tr><td>Called capital sitting idle</td><td class="num v-input">200,000,000</td><td class="unit">EUR</td><td class="note">Treasury cash position report</td></tr>
+            <tr><td>Days idle</td><td class="num v-input">90</td><td class="unit">days</td><td class="note">Call date to expected deployment date</td></tr>
+            <tr><td>LP preferred return rate</td><td class="num v-input">8.00%</td><td class="unit">%</td><td class="note">LPA preferred return</td></tr>
+            <tr><td>Commitment fees on undrawn facilities</td><td class="num v-input">0.50%</td><td class="unit">%</td><td class="note">Credit agreement commitment fee</td></tr>
+            <tr><td>Overnight / term deposit yield</td><td class="num v-input">3.40%</td><td class="unit">%</td><td class="note">Treasury sweep rate at measurement date</td></tr>
+            <tr><td>Toggle: LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="unit">Y/N</td><td class="note">Must be confirmed against the LPA. Set NO if unconfirmed.</td></tr>
+
+            <tr class="section-row"><td colspan="4">4 &nbsp;Drawn but undeployed capital &nbsp;— new in v1.2</td></tr>
+            <tr><td>Amount drawn, not yet deployed</td><td class="num v-input">60,000,000</td><td class="unit">EUR</td><td class="note">Facility drawdown log vs deployment log</td></tr>
+            <tr><td>Days drawn and undeployed</td><td class="num v-input">75</td><td class="unit">days</td><td class="note">Drawdown date to actual deployment date</td></tr>
+            <tr><td>Facility interest rate on drawn amount</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Credit agreement: all-in rate on the facility actually drawn</td></tr>
+            <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="unit">%</td><td class="note">Judgement input: fund target IRR or realised portfolio IRR</td></tr>
+
+            <tr class="section-row"><td colspan="4">5 &nbsp;FX sourcing</td></tr>
+            <tr><td>Foreign-currency deployment amount</td><td class="num v-input">40,000,000</td><td class="unit">EUR eq.</td><td class="note">Deal funding requirement in non-base currency</td></tr>
+            <tr><td>Proportion of deployment requiring FX</td><td class="num v-input">0.0%</td><td class="unit">%</td><td class="note">Set to 0% if the deal is base-currency only</td></tr>
+            <tr><td>Toggle: multi-currency facility available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="unit">Y/N</td><td class="note">Must be confirmed in the credit agreement. Set NO if unconfirmed.</td></tr>
+            <tr><td>Path A &mdash; native-currency tranche rate</td><td class="num v-input">5.65%</td><td class="unit">%</td><td class="note">Credit agreement: target-currency tranche pricing</td></tr>
+            <tr><td>Path B &mdash; base-currency tranche rate</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Credit agreement: base-currency tranche pricing</td></tr>
+            <tr><td>Path B &mdash; forward points (annualised)</td><td class="num v-input">0.68%</td><td class="unit">%</td><td class="note">FX forward quote; embeds cross-currency basis</td></tr>
+
+            <tr class="section-row"><td colspan="4">6 &nbsp;Management fee</td></tr>
+            <tr><td>Toggle: fee basis</td><td class="num"><span class="v-toggle">AUM</span></td><td class="unit">AUM/COMMIT</td><td class="note">AUM = fees on invested and idle capital. COMMIT = on commitments.</td></tr>
+            <tr><td>Management fee rate</td><td class="num v-input">1.50%</td><td class="unit">%</td><td class="note">LPA management fee provision</td></tr>
+
+            <tr class="section-row"><td colspan="4">7 &nbsp;Drag allocation basis</td></tr>
+            <tr><td>Total expected deployment over drag period</td><td class="num v-input">400,000,000</td><td class="unit">EUR</td><td class="note">Capital expected across all deals in the measurement window</td></tr>
+
+            <tr class="section-row"><td colspan="4">8 &nbsp;Deal assessment</td></tr>
+            <tr><td>Deployment amount for this deal</td><td class="num v-input">75,000,000</td><td class="unit">EUR</td><td class="note">Proposed investment size</td></tr>
+            <tr><td>Expected deal IRR (gross)</td><td class="num v-input">14.20%</td><td class="unit">%</td><td class="note">Deal team underwriting model</td></tr>
+            <tr><td>Required spread over ICC to proceed</td><td class="num v-input">1.00%</td><td class="unit">%</td><td class="note">House policy: minimum ICC clearance margin</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>The allocation basis is the input that moves the answer most.</strong> Fund-level drags &mdash; idle capital, fee drag, interest on drawn-but-undeployed capital &mdash; are spread across total expected deployment of EUR 400mm, not loaded onto the single deal being assessed. Loading them onto one deal would overstate its cost several times over and produce a threshold no deal could clear. Set this figure carefully, and set it consistently across deals.
+    </div>
+  </div>
+</div>
+
+<!-- ══ CALCULATION ══ -->
+<div class="panel" id="p-calc" role="tabpanel" aria-labelledby="t-calc">
+  <div class="wrap">
+    <h2>Five components, built in the open.</h2>
+    <p class="panel-lede">Each component states its own logic. The two memo lines exist to show what the calculation would have missed under a simpler method &mdash; the gap between them is the argument for doing this properly.</p>
+
+    <div class="waterfall" id="wf">
+      <div class="wf-row">
+        <div class="wf-top"><span class="wf-label">1 &nbsp;Weighted cost of next unit deployed</span><span class="wf-val" data-count="727">727 bps</span></div>
+        <div class="wf-track"><div class="wf-fill" data-w="83.8" style="width:83.8%"></div></div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-top"><span class="wf-label">2 &nbsp;Net idle capital drag</span><span class="wf-val" data-count="63">63 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="7.2" style="width:7.2%"></div></div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-top"><span class="wf-label">3 &nbsp;FX sourcing cost (optimised)</span><span class="wf-val" data-count="0">0 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--nil" data-w="0.6" style="width:0.6%"></div></div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-top"><span class="wf-label">4 &nbsp;Management fee drag</span><span class="wf-val" data-count="18">18 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="2.1" style="width:2.1%"></div></div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-top"><span class="wf-label">5 &nbsp;Drawn capital opportunity cost</span><span class="wf-val" data-count="59">59 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="6.8" style="width:6.8%"></div></div>
+      </div>
+      <div class="wf-total">
+        <span class="wf-total-lab">Marginal ICC</span>
+        <span><span class="wf-total-val" data-count="868">868</span> <span class="wf-total-lab">bps</span></span>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-bar">
+        <span class="sheet-name">ICC Calculation</span>
+        <span class="sheet-meta">All figures derive from the Inputs tab</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:31%">Component</th><th style="width:15%" class="num">Value</th><th style="width:8%">Unit</th><th>Logic</th></tr></thead>
+          <tbody>
+            <tr class="section-row"><td colspan="4">Component 1 &nbsp;— Weighted cost of next unit deployed</td></tr>
+            <tr><td>LP capital contribution</td><td class="num v-formula">4.80%</td><td class="unit">480 bps</td><td class="note">60.0% of funding &times; 8.00% preferred return = 4.80%. The largest single cost, because LP capital is both the biggest slice and the most expensive.</td></tr>
+            <tr><td>Subscription line contribution</td><td class="num v-formula">1.56%</td><td class="unit">156 bps</td><td class="note">30.0% of funding &times; 5.20% all-in rate = 1.56%. Cheaper than LP capital, which is why sub lines are drawn first.</td></tr>
+            <tr><td>NAV facility contribution</td><td class="num v-formula">0.91%</td><td class="unit">91 bps</td><td class="note">10.0% of funding &times; 9.10% all-in rate = 0.91%. The most expensive source per euro, but only a tenth of the mix.</td></tr>
+            <tr class="total-row"><td>Component 1</td><td class="num">7.27%</td><td class="unit">727 bps</td><td class="note">4.80% + 1.56% + 0.91%. An annual rate: the blended cost of holding this funding mix for a year.</td></tr>
+
+            <tr class="section-row"><td colspan="4">Component 2 &nbsp;— Net idle capital drag &nbsp;· measured over 90 days</td></tr>
+            <tr><td>Gross idle drag</td><td class="num v-formula">4,191,781</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; (8.00% preferred return + 0.50% commitment fee) = EUR 4,191,781. The preferred return accrues to LPs from the day capital is <em>called</em>, not the day it is invested &mdash; so 90 days of waiting costs real money.</td></tr>
+            <tr><td>Less: interest earned on placement</td><td class="num v-formula">(1,676,712)</td><td class="unit">EUR</td><td class="note">EUR 200m &times; (90 &divide; 365) &times; 3.40% deposit rate = EUR 1,676,712. Earned only where the LPA permits idle cash to be held in interest-bearing accounts. If it does not, this line is zero and the drag more than doubles.</td></tr>
+            <tr><td>Net idle drag</td><td class="num v-formula">2,515,068</td><td class="unit">EUR</td><td class="note">EUR 4,191,781 &minus; EUR 1,676,712. What 90 days of idleness actually costs the fund.</td></tr>
+            <tr class="total-row"><td>Component 2</td><td class="num">0.63%</td><td class="unit">63 bps</td><td class="note">EUR 2,515,068 &divide; EUR 400m total expected deployment = 0.63%. A one-off cost per euro deployed, not an annual rate.</td></tr>
+
+            <tr class="section-row"><td colspan="4">Component 3 &nbsp;— FX sourcing cost (optimised)</td></tr>
+            <tr><td>Path A &mdash; direct native-currency draw</td><td class="num v-formula">5.65%</td><td class="unit">%</td><td class="note">Native-currency tranche rate</td></tr>
+            <tr><td>Path B &mdash; base-currency draw + hedge</td><td class="num v-formula">5.88%</td><td class="unit">%</td><td class="note">Base tranche rate + forward points</td></tr>
+            <tr><td>Selected path cost</td><td class="num v-formula">5.65%</td><td class="unit">%</td><td class="note">Lower path, only where multi-currency draw is confirmed</td></tr>
+            <tr class="memo-row"><td>Memo: saving vs hedged path</td><td class="num v-formula">0.23%</td><td class="unit">23 bps</td><td class="note">What the optimisation is worth when FX is in play</td></tr>
+            <tr class="total-row"><td>Component 3</td><td class="num">0.00%</td><td class="unit">0 bps</td><td class="note">Selected path &times; 0% FX proportion &mdash; nil on this deal</td></tr>
+
+            <tr class="section-row"><td colspan="4">Component 4 &nbsp;— Management fee drag &nbsp;· measured over the same 90 days</td></tr>
+            <tr><td>Fee drag on idle capital</td><td class="num v-formula">739,726</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; 1.50% management fee = EUR 739,726. On an AuM basis the fee is charged on capital that has been called but is not yet working, so the fund pays to manage money that is doing nothing. On a commitment basis the fee does not vary with deployment and this line is zero.</td></tr>
+            <tr class="total-row"><td>Component 4</td><td class="num">0.18%</td><td class="unit">18 bps</td><td class="note">EUR 739,726 &divide; EUR 400m total expected deployment = 0.18%. A one-off cost per euro deployed.</td></tr>
+
+            <tr class="section-row"><td colspan="4">Component 5 &nbsp;— Drawn capital opportunity cost &nbsp;· measured over 75 days &nbsp;— new in v1.2</td></tr>
+            <tr><td>Combined annualised rate</td><td class="num v-formula">19.20%</td><td class="unit">1,920 bps</td><td class="note">5.20% facility interest rate + 14.00% forgone deployment return. You pay interest on the borrowing <em>and</em> lose the return the money would have made if invested.</td></tr>
+            <tr><td>Drawn capital opportunity cost</td><td class="num v-formula">2,367,123</td><td class="unit">EUR</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 19.20% = EUR 2,367,123. The 75 days run from the drawdown date to the date the money was actually deployed.</td></tr>
+            <tr class="memo-row"><td>Memo: facility interest alone</td><td class="num v-formula">641,096</td><td class="unit">EUR</td><td class="note">EUR 60m &times; (75 &divide; 365) &times; 5.20% = EUR 641,096. This is the only part the bank invoices for, and the only part most treasury systems record.</td></tr>
+            <tr class="total-row"><td>Component 5</td><td class="num">0.59%</td><td class="unit">59 bps</td><td class="note">EUR 2,367,123 &divide; EUR 400m total expected deployment = 0.59%. A one-off cost per euro deployed.</td></tr>
+
+            <tr class="section-row"><td colspan="4">Marginal ICC &nbsp;— total</td></tr>
+            <tr class="total-row"><td>Marginal ICC</td><td class="num">8.68%</td><td class="unit">868 bps</td><td class="note">Sum of components 1&ndash;5</td></tr>
+            <tr><td>Typical static hurdle (reference only)</td><td class="num v-input">8.00%</td><td class="unit">800 bps</td><td class="note">The proxy this framework replaces &mdash; shown for contrast, not used in any calculation</td></tr>
+            <tr class="total-row"><td>ICC vs static hurdle</td><td class="num">+0.68%</td><td class="unit">+68 bps</td><td class="note">Positive = the static hurdle understates true cost of capital</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Two different measurement bases, and why.</strong> Component 1 is an <em>annual rate</em> &mdash; the cost of holding the funding mix for a year. Components 2, 4 and 5 are <em>one-off costs</em> &mdash; a specific euro amount incurred over a specific number of days, then divided by the capital expected to be deployed in that window. They are added together because the question being asked is a single one: what does it cost, all in, to get the next euro deployed and hold it for a year. If your measurement window is much shorter or longer than a year, say so explicitly when presenting the number, because the two bases only reconcile cleanly when the window is roughly annual.
+    </div>
+
+    <div class="callout callout--teal">
+      <strong>The memo line on component 5 is the point of the whole exercise.</strong> Facility interest alone on drawn-but-undeployed capital is EUR 641,096. Add the return that capital was not earning while it sat there and the true cost is EUR 2,367,123 &mdash; nearly four times larger. Treasury systems capture the first number because someone invoices for it. Nobody invoices for the second.
+    </div>
+  </div>
+</div>
+
+<!-- ══ OUTPUT ══ -->
+<div class="panel" id="p-out" role="tabpanel" aria-labelledby="t-out">
+  <div class="wrap">
+    <h2>One block, straight into the IC memo.</h2>
+    <p class="panel-lede">The output tab is written to be pasted. It gives the committee a recommendation, the attribution behind it, and an audit trail of every condition that was assumed &mdash; so the assumptions can be challenged in the room rather than discovered later.</p>
+
+    <div class="sheet">
+      <div class="sheet-bar">
+        <span class="sheet-name">IC Output — decision block</span>
+        <span class="sheet-meta">Every figure traceable to Inputs</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:31%">Measure</th><th style="width:18%" class="num">Value</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>Deployment amount</td><td class="num v-link">75,000,000</td><td class="note">Proposed investment size</td></tr>
+            <tr><td>Marginal ICC</td><td class="num v-link">8.68%</td><td class="note">Live cost of deploying the next unit of capital</td></tr>
+            <tr><td>Expected deal IRR (gross)</td><td class="num v-link">14.20%</td><td class="note">Deal team underwriting model</td></tr>
+            <tr><td>Spread over ICC</td><td class="num v-formula">5.52%</td><td class="note">Deal IRR less marginal ICC</td></tr>
+            <tr><td>Spread over ICC (bps)</td><td class="num v-formula">552</td><td class="note">Same figure in basis points</td></tr>
+            <tr><td>Required spread (house policy)</td><td class="num v-link">1.00%</td><td class="note">Minimum ICC clearance margin</td></tr>
+            <tr class="total-row"><td>Recommendation</td><td class="num" style="color:var(--teal);font-weight:600">PROCEED</td><td class="note">Proceed only where spread over ICC meets or exceeds house policy minimum</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sheet" style="margin-top:2rem">
+      <div class="sheet-bar">
+        <span class="sheet-name">Component attribution</span>
+        <span class="sheet-meta">Where the cost is coming from</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:44%">Component</th><th style="width:18%" class="num">Contribution</th><th class="num">Share of total ICC</th></tr></thead>
+          <tbody>
+            <tr><td>1 &nbsp;Weighted cost of next unit deployed</td><td class="num v-link">7.27%</td><td class="num">83.8%</td></tr>
+            <tr><td>2 &nbsp;Net idle capital drag</td><td class="num v-link">0.63%</td><td class="num">7.2%</td></tr>
+            <tr><td>3 &nbsp;FX sourcing cost (optimised)</td><td class="num v-link">0.00%</td><td class="num">0.0%</td></tr>
+            <tr><td>4 &nbsp;Management fee drag</td><td class="num v-link">0.18%</td><td class="num">2.1%</td></tr>
+            <tr><td>5 &nbsp;Drawn capital opportunity cost</td><td class="num v-link">0.59%</td><td class="num">6.8%</td></tr>
+            <tr class="total-row"><td>Total</td><td class="num">8.68%</td><td class="num">100.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sheet" style="margin-top:2rem">
+      <div class="sheet-bar">
+        <span class="sheet-name">Audit trail — conditions confirmed</span>
+        <span class="sheet-meta">Challenge these in the room, not afterwards</span>
+      </div>
+      <div class="sheet-scroll">
+        <table>
+          <thead><tr><th style="width:38%">Condition</th><th style="width:20%" class="num">Setting</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>Drag allocation base</td><td class="num v-link">400,000,000</td><td class="note">Fund-level drags spread across this, not this deal alone</td></tr>
+            <tr><td>Multi-currency facility draw available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the credit agreement</td></tr>
+            <tr><td>LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the LPA</td></tr>
+            <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">AUM</span></td><td class="note">AUM-basis funds incur fee drag on idle capital</td></tr>
+            <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="note">Not a market-observable rate. Defaults to fund target IRR; confirm the house basis.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>The audit trail is not decoration.</strong> Four of the five conditions above change the answer if they are wrong, and two of them are permissions that must be read out of legal documents rather than assumed. Publishing them alongside the recommendation means the committee is approving a number it can see the shape of.
+    </div>
+  </div>
+</div>
+
+</div><!-- /panels -->
+
+<section class="dl">
+  <div class="wrap dl-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--brass)">Next step</p>
+      <h2>Run it on a live deal.</h2>
+      <p>Thirty minutes, your numbers. We set the inputs from your LPA and credit agreement, calculate the marginal ICC on a deal you are actually looking at, and compare it to the threshold you would otherwise have used.</p>
+      <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
+    </div>
+    <div>
+      <div class="spec-line"><span>Version</span><span>ClarityStack™ v1.2</span></div>
+      <div class="spec-line"><span>Components</span><span>Five</span></div>
+      <div class="spec-line"><span>Inputs</span><span>23, each sourced</span></div>
+      <div class="spec-line"><span>Worked example</span><span>EUR 500mm fund</span></div>
+      <div class="spec-line" style="border-bottom:none"><span>Format</span><span>Excel, no add-ins</span></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /view-methodology -->
+
+
+<!-- ═════════ ABOUT VIEW ═════════ -->
+<div id="view-about">
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <p class="eyebrow" style="color:var(--brass)">About</p>
+        <h1>I built this framework. Then I turned it into a <em>consultancy</em>.</h1>
+        <p>Nine years inside Oaktree's European Principal Group, across private equity and private debt strategies, watching capital sit idle in a EUR 8.5bn platform &mdash; and building the tools to measure what it was costing. ICC is not a consultant's theory. It is an internal discipline, productised.</p>
+      </div>
+      <figure class="portrait" style="margin:0">
+        <img src="data:image/jpeg;base64,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" alt="Simon Williams, founder of Yield Horizon" width="720" height="900">
+        <figcaption class="portrait-cap">
+          <strong>Simon Williams</strong>
+          Founder &middot; London
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="headline-figs">
+      <div><div class="hfig-val">16+</div><div class="hfig-lab">Years in private markets</div></div>
+      <div><div class="hfig-val">8.5bn</div><div class="hfig-lab">EUR &mdash; European PE &amp; debt funds</div></div>
+      <div><div class="hfig-val">3</div><div class="hfig-lab hfig-lab--wide">Luxembourg, Dublin and Amsterdam domiciles</div></div>
+      <div class="hfig--teal"><div class="hfig-val">FCA</div><div class="hfig-lab">ICAEW, qualified 2007</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="pull">
+      <p class="pull-quote">Developed frameworks for monitoring and benchmarking internal cost of capital across funds and investment structures, driving alignment of financing strategies with expected investment returns and liquidity profiles.</p>
+      <p class="pull-src">From my responsibilities at Oaktree Capital Management</p>
+    </div>
+    <p style="color:var(--slate-light);max-width:58ch;margin:0">That line is the origin of ClarityStack™. The framework was built inside a fund, for a fund, to answer a question the investment committee kept asking and the existing tools could not settle: given everything we have drawn, hedged and left sitting in a deposit account, what does the next euro actually cost?</p>
+  </div>
+</section>
+
+<section class="light">
+  <div class="wrap">
+    <p class="eyebrow">Background</p>
+    <h2>Twenty-one years, three sides of the same problem.</h2>
+    <p class="section-lede">Transaction diligence at KPMG, a global bank balance sheet at Citco, then nine years inside the treasury and structuring function of a major alternatives manager &mdash; covering European private equity and private debt strategies across Luxembourg, Dublin and Amsterdam platforms. The through-line is the plumbing: how capital is raised, financed, moved and accounted for.</p>
+
+    <div class="cv">
+
+      <article class="cv-role">
+        <div class="cv-meta">
+          <div class="cv-dates">2016 &ndash; 2025</div>
+          <h3 class="cv-firm">Oaktree Capital Management</h3>
+          <div class="cv-title">Senior Vice President, European Principal Group</div>
+          <div class="cv-loc">London</div>
+        </div>
+        <div class="cv-body">
+          <p>Financial oversight, structuring and liquidity strategy for approximately EUR8.5bn across principal, private equity and debt opportunity funds.</p>
+          <ul>
+            <li>Built the internal cost of capital benchmarking frameworks that became ClarityStack™, aligning financing strategy with expected investment returns and liquidity profiles</li>
+            <li>Led negotiation, structuring and implementation of subscription line and NAV facilities supporting investment activity and working capital efficiency</li>
+            <li>Negotiated financing and risk documentation including ISDAs, CSA thresholds and ATE triggers</li>
+            <li>Developed and implemented a strategy-wide FX and interest rate hedging policy covering both investment-level and currency feeder exposures</li>
+            <li>Structured Solvency II-optimised rated feeders, fund-of-one vehicles, evergreen SMAs and sub-participation agreements</li>
+            <li>Built allocation models for SMA and FOO vehicles investing across multiple strategies and sleeves</li>
+            <li>Oversaw multi-jurisdictional SPV holding structures across Luxembourg, Dublin and Amsterdam</li>
+            <li>Advised portfolio managers on capital sourcing for deployment, distributions, financing repayments and collateral posting</li>
+            <li>Partnered with PwC on a firm-wide operational review benchmarking capabilities against peers, driving centralisation of middle-office functions</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cv-role">
+        <div class="cv-meta">
+          <div class="cv-dates">2009 &ndash; 2016</div>
+          <h3 class="cv-firm">The Citco Group of Companies</h3>
+          <div class="cv-title">Assistant Financial Director, Citco Banks</div>
+          <div class="cv-loc">London, Geneva, Amsterdam</div>
+        </div>
+        <div class="cv-body">
+          <p>Financial oversight of a global bank network carrying a USD 6&ndash;9bn balance sheet, with the regulatory and management reporting that goes with it.</p>
+          <ul>
+            <li>Directed finance teams of 15&ndash;20 across seven countries, delivering consolidated reporting under Basel II/III and CRD IV</li>
+            <li>Finance lead on a global banking system implementation (Temenos T24) and a group-wide Oracle ERP rollout</li>
+            <li>Led the carve-out of a USD100m custody business, supporting refinancing and private equity investment processes involving Goldman Sachs, Stone Point Capital and General Atlantic</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="cv-role">
+        <div class="cv-meta">
+          <div class="cv-dates">2004 &ndash; 2009</div>
+          <h3 class="cv-firm">KPMG LLP</h3>
+          <div class="cv-title">Associate, Transaction Services</div>
+          <div class="cv-loc">London</div>
+        </div>
+        <div class="cv-body">
+          <p>Financial due diligence on buy-side and sell-side transactions, including carve-outs and post-merger integration planning.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Why one person</p>
+    <h2>You get the person who built it.</h2>
+    <p class="section-lede">The obvious objection to a sole practitioner is capacity. The answer is that this work does not need a pyramid &mdash; it needs someone who has read a credit agreement, negotiated a CSA threshold, and had to explain a hedging policy to an investment committee.</p>
+
+    <div class="compare">
+      <div class="crow">
+        <div class="ckey">Who does the work</div>
+        <div class="cthem">A partner sells; associates two years out of university deliver.</div>
+        <div class="cus">The person in the pitch is <strong>the person in the model</strong>.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">The output</div>
+        <div class="cthem">A framework document requiring translation before anyone can use it.</div>
+        <div class="cus">A <strong>working Excel model</strong> calibrated to your LPA and credit agreement.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">The vantage point</div>
+        <div class="cthem">Advisory experience of fund finance, from outside.</div>
+        <div class="cus">Nine years <strong>inside</strong> a EUR 8.5bn European PE and private debt platform, accountable for the outcome.</div>
+      </div>
+      <div class="crow">
+        <div class="ckey">On Big Four reviews</div>
+        <div class="cthem">&mdash;</div>
+        <div class="cus">I was <strong>part of a team that commissioned a Big Four Consultancy</strong>. I partnered with PwC on a firm-wide operational review at Oaktree, so I know what that process delivers and what it leaves you to finish yourself.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Qualifications</p>
+    <h2>Credentials.</h2>
+    <div class="creds">
+      <div class="cred">
+        <p class="cred-name">Fellow, Institute of Chartered Accountants in England and Wales</p>
+        <div class="cred-meta">FCA &middot; qualified 2007</div>
+      </div>
+      <div class="cred">
+        <p class="cred-name">Based in London, covering the UK and Europe</p>
+        <div class="cred-meta">Available for on-site engagement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dl">
+  <div class="wrap dl-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--brass)">Next step</p>
+      <h2>Thirty minutes, one live deal.</h2>
+      <p>The quickest way to judge whether this is useful is to run it on a deal you are actually looking at. No preparation needed &mdash; bring the numbers and we will calculate the marginal ICC together.</p>
+      <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
+    </div>
+    <div>
+      <div class="spec-line"><span>Experience</span><span>16+ years, private markets</span></div>
+      <div class="spec-line"><span>Sector</span><span>European PE &amp; private debt</span></div>
+      <div class="spec-line"><span>Specialism</span><span>Fund finance &amp; treasury</span></div>
+      <div class="spec-line"><span>Qualification</span><span>ICAEW, FCA</span></div>
+      <div class="spec-line" style="border-bottom:none"><span>Based</span><span>London, UK</span></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /view-about -->
+
+<footer>
+  <div class="foot-in">
+    <span class="foot-copy">© 2026 Yield Horizon. ClarityStack™ is a proprietary framework.</span>
+    <span class="tagline">Where machines process. Humans decide. Capital compounds.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Tabs: enabled only when JS runs. Without JS every panel shows stacked. ── */
+  var tabs   = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('[role="tabpanel"]'));
+
+  if(tabs.length){
+    document.body.classList.add('js');
+    panels.forEach(function(p,i){ p.classList.toggle('is-active', i === 0); });
+    tabs.forEach(function(t,i){ t.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); });
+  }
+
+  function selectTab(tab){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
+    panels.forEach(function(p){ p.classList.toggle('is-active', p.id === tab.getAttribute('aria-controls')); });
+    if(tab.getAttribute('aria-controls') === 'p-calc') animate(document.getElementById('wf'), 'wf-total-val');
+  }
+
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ selectTab(tab); });
+    tab.addEventListener('keydown', function(e){
+      var n = null;
+      if(e.key === 'ArrowRight') n = tabs[(i+1) % tabs.length];
+      if(e.key === 'ArrowLeft')  n = tabs[(i-1+tabs.length) % tabs.length];
+      if(e.key === 'Home') n = tabs[0];
+      if(e.key === 'End')  n = tabs[tabs.length-1];
+      if(n){ e.preventDefault(); n.focus(); selectTab(n); }
+    });
+  });
+
+  /* ── Animation: purely decorative. Values are already correct in the HTML. ── */
+  var animated = [];
+  function animate(box, plainClass){
+    if(!box || reduce || animated.indexOf(box) !== -1) return;
+    animated.push(box);
+    var fills = box.querySelectorAll('[data-w]');
+    var nums  = box.querySelectorAll('[data-count]');
+    fills.forEach(function(f){ f.style.width = '0%'; });
+    nums.forEach(function(n){ n.textContent = n.classList.contains(plainClass) ? '0' : '0 bps'; });
+    requestAnimationFrame(function(){
+      fills.forEach(function(f,i){
+        setTimeout(function(){ f.style.width = f.dataset.w + '%'; }, i*130);
+      });
+      nums.forEach(function(n,i){
+        var target = parseInt(n.dataset.count,10), plain = n.classList.contains(plainClass);
+        var start = null, dur = 850;
+        setTimeout(function(){
+          function step(ts){
+            if(!start) start = ts;
+            var p = Math.min((ts-start)/dur, 1);
+            var e = 1 - Math.pow(1-p, 3);
+            var v = Math.round(target * e);
+            n.textContent = v.toLocaleString('en-GB') + (plain ? '' : ' bps');
+            if(p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }, 250 + i*100);
+      });
+    });
+  }
+
+  var stack = document.getElementById('stack');
+  if(stack && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ animate(stack, 'total-fig'); io.disconnect(); }
+      });
+    }, {threshold:0.15});
+    io.observe(stack);
+  }
+})();
+</script>
+</body>
+</html>
