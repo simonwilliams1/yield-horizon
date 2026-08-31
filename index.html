@@ -288,7 +288,7 @@ h2{
 /* close */
 .close{background:var(--ink-deep)}
 .close-grid{display:grid;grid-template-columns:1fr;gap:2.5rem}
-@media(min-width:860px){.close-grid{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:end}}
+@media(min-width:860px){.close-grid{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:start}}
 .close h2{color:var(--paper);max-width:18ch}
 .close-lede{color:var(--slate-light);max-width:44ch;margin:0 0 2rem}
 .contact-line{display:flex;justify-content:space-between;gap:1rem;padding:.85rem 0;
@@ -834,8 +834,8 @@ body.js .panel.is-active{display:block}
 
 <div class="tabstrip">
   <div class="tabstrip-in" role="tablist" aria-label="Workbook sheets">
-    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Definition</button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="p-Instructions" id="t-Instructions">Instructions</button>
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Plain English</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-readme" id="t-readme">Readme</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-inputs" id="t-inputs">Inputs</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-calc" id="t-calc">ICC Calculation</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-out" id="t-out">IC Output</button>
