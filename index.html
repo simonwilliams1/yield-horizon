@@ -544,7 +544,7 @@ body.js .panel.is-active{display:block}
           <a class="nav-dropdown-link" href="#view-home" role="menuitem">Home</a>
           <span class="nav-dropdown-label">Methodology</span>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-plain" role="menuitem">Definition</a>
-          <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-readme" role="menuitem">Instructions</a>
+          <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-Instructions" role="menuitem">Instructions</a>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-inputs" role="menuitem">Inputs</a>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-calc" role="menuitem">ICC Calculation</a>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-out" role="menuitem">IC Output</a>
@@ -665,7 +665,7 @@ body.js .panel.is-active{display:block}
         <div class="gap-row"><span class="gap-label">Capital underpriced by</span><span class="gap-val" data-count="68">68 bps</span></div>
       </div>
 
-      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the plain-English glossary if the terms are unfamiliar.</p>
+      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the glossary if the terms are unfamiliar.</p>
     </div>
   </div>
 </div>
@@ -903,8 +903,8 @@ body.js .panel.is-active{display:block}
 
 <div class="tabstrip">
   <div class="tabstrip-in" role="tablist" aria-label="Workbook sheets">
-    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Plain English</button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="p-readme" id="t-readme">Readme</button>
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Introduction</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-Instructions" id="t-Instructions">Instructions</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-inputs" id="t-inputs">Inputs</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-calc" id="t-calc">ICC Calculation</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-out" id="t-out">IC Output</button>
@@ -988,7 +988,7 @@ body.js .panel.is-active{display:block}
   </div>
 </div>
 
-<div class="panel" id="p-readme" role="tabpanel" aria-labelledby="t-readme">
+<div class="panel" id="p-Instructions" role="tabpanel" aria-labelledby="t-Instructions">
   <div class="wrap">
     <h2>What the model does, and what it will not do.</h2>
     <p class="panel-lede">ClarityStack calculates the marginal cost of deploying the next unit of capital, for use as a pre-approval gate at investment committee. It replaces a static 6&ndash;8% hurdle rate with a live, audit-trailed threshold.</p>
