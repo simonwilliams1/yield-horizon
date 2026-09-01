@@ -544,7 +544,7 @@ body.js .panel.is-active{display:block}
           <a class="nav-dropdown-link" href="#view-home" role="menuitem">Home</a>
           <span class="nav-dropdown-label">Methodology</span>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-plain" role="menuitem">Definition</a>
-          <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-Introduction" role="menuitem">Instructions</a>
+          <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-readme" role="menuitem">Instructions</a>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-inputs" role="menuitem">Inputs</a>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-calc" role="menuitem">ICC Calculation</a>
           <a class="nav-dropdown-sublink" href="#view-methodology" data-tab="t-out" role="menuitem">IC Output</a>
@@ -568,10 +568,7 @@ body.js .panel.is-active{display:block}
     <div>
       <p class="eyebrow">Cost of capital — private equity &amp; credit</p>
       <h1>Your hurdle rate only <em>looks</em> conservative.</h1>
-      <p class="hero-lede">A 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both &mdash; and the headroom is gone. Yield Horizon measures the cost of capital at the point of deployment—including funding costs, idle capital, fees and timing effects. An 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both — and the headroom is gone. looks conservative.
-      A 8% threshold sits comfortably above a 7.27% blended funding cost. 
-      <div class="sheet" style="margin-top:2.5rem">
-        Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both — and the headroom is gone.</p>
+      <p class="hero-lede">An 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both &mdash; and the headroom is gone.</p>
       <div class="hero-actions">
         <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
         <a class="btn btn--ghost" href="#view-methodology">See the calculation</a>
@@ -584,7 +581,18 @@ body.js .panel.is-active{display:block}
           <span class="sheet-meta">Challenge these in the room, not afterwards</span>
         </div>
         <div class="sheet-scroll">
-            </div>
+          <table>
+            <thead><tr><th style="width:38%">Condition</th><th style="width:20%" class="num">Setting</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td>Return</td><td class="num v-link">5.68%</td><td class="note"></td></tr>
+              <tr><td>Drag allocation base</td><td class="num v-link">400,000,000</td><td class="note">Fund-level drags spread across this, not this deal alone</td></tr>
+              <tr><td>Multi-currency facility draw available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the credit agreement</td></tr>
+              <tr><td>LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the LPA</td></tr>
+              <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">AUM</span></td><td class="note">AUM-basis funds incur fee drag on idle capital</td></tr>
+              <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="note">Not a market-observable rate. Defaults to fund target IRR; confirm the house basis.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -657,7 +665,7 @@ body.js .panel.is-active{display:block}
         <div class="gap-row"><span class="gap-label">Capital underpriced by</span><span class="gap-val" data-count="68">68 bps</span></div>
       </div>
 
-      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the Introduction glossary if the terms are unfamiliar.</p>
+      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the plain-English glossary if the terms are unfamiliar.</p>
     </div>
   </div>
 </div>
@@ -896,7 +904,7 @@ body.js .panel.is-active{display:block}
 <div class="tabstrip">
   <div class="tabstrip-in" role="tablist" aria-label="Workbook sheets">
     <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Plain English</button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="p-Intorduction" id="t-Intorduction">Introduction</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-readme" id="t-readme">Readme</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-inputs" id="t-inputs">Inputs</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-calc" id="t-calc">ICC Calculation</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-out" id="t-out">IC Output</button>
@@ -980,7 +988,7 @@ body.js .panel.is-active{display:block}
   </div>
 </div>
 
-<div class="panel" id="p-Introduction" role="tabpanel" aria-labelledby="t-Introduction">
+<div class="panel" id="p-readme" role="tabpanel" aria-labelledby="t-readme">
   <div class="wrap">
     <h2>What the model does, and what it will not do.</h2>
     <p class="panel-lede">ClarityStack calculates the marginal cost of deploying the next unit of capital, for use as a pre-approval gate at investment committee. It replaces a static 6&ndash;8% hurdle rate with a live, audit-trailed threshold.</p>
