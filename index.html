@@ -288,7 +288,7 @@ h2{
 /* close */
 .close{background:var(--ink-deep)}
 .close-grid{display:grid;grid-template-columns:1fr;gap:2.5rem}
-@media(min-width:860px){.close-grid{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:start}}
+@media(min-width:860px){.close-grid{grid-template-columns:1.1fr .9fr;gap:4rem;align-items:end}}
 .close h2{color:var(--paper);max-width:18ch}
 .close-lede{color:var(--slate-light);max-width:44ch;margin:0 0 2rem}
 .contact-line{display:flex;justify-content:space-between;gap:1rem;padding:.85rem 0;
@@ -518,10 +518,7 @@ body.js .panel.is-active{display:block}
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow">Cost of capital — private equity &amp; credit</p>
-      <em>Are you measuring the true cost of your fund's capital? Yield Horizon helps private equity and private credit funds identify the hidden cost of idle, early-drawn and inefficiently deployed capital—so investment committees can make better deployment decisions.
-Yield Horizon measures the cost of capital at the point of deployment—including funding costs, idle capital, fees and timing effects.
-An 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both — and the headroom is gone.<em>
- <em>looks</em> conservative.</emk>
+      <h1>Your hurdle rate only <em>looks</em> conservative.</h1>
       <p class="hero-lede">An 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-three basis points of headroom. Then you count the capital sitting idle, the facilities drawn early, and the fees accruing on both &mdash; and the headroom is gone.</p>
       <div class="hero-actions">
         <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
@@ -837,8 +834,8 @@ An 8% threshold sits comfortably above a 7.27% blended funding cost. Seventy-thr
 
 <div class="tabstrip">
   <div class="tabstrip-in" role="tablist" aria-label="Workbook sheets">
-    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Introduction</button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="p-readme" id="t-Method"></button>
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p-plain" id="t-plain">Plain English</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-readme" id="t-readme">Readme</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-inputs" id="t-inputs">Inputs</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-calc" id="t-calc">ICC Calculation</button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="p-out" id="t-out">IC Output</button>
