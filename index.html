@@ -379,8 +379,6 @@ footer{background:var(--ink-deep);border-top:1px solid var(--line-dark);padding:
 
 /* sheet */
 .sheet{border:1px solid var(--line-light);background:#fff;color:var(--ink);overflow:hidden}
-.hero-sheet{margin-top:clamp(2rem,4vw,3rem)}
-@media(min-width:960px){.hero-sheet{grid-column:1 / -1}}
 .sheet-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
   background:var(--ink);color:var(--paper);padding:.7rem 1.1rem}
 .sheet-name{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
@@ -652,31 +650,8 @@ body.js .panel.is-active{display:block}
 
       <p class="stack-foot">Illustrative, on the five-component ClarityStack v3.2 engine. Components are rounded to the nearest basis point; totals are computed on unrounded figures. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the glossary if the terms are unfamiliar.</p>
     </div>
-
-      <div class="sheet hero-sheet">
-        <div class="sheet-bar">
-          <span class="sheet-name">Output of ICC</span>
-          <span class="sheet-meta">Challenge these in the room, not afterwards</span>
-        </div>
-        <div class="sheet-scroll">
-          <table>
-            <thead><tr><th style="width:38%">Condition</th><th style="width:20%" class="num">Setting</th><th>Note</th></tr></thead>
-            <tbody>
-              <tr><td>Return</td><td class="num v-link">5.68%</td><td class="note"></td></tr>
-              <tr><td>Non-working capital base</td><td class="num v-link">260,000,000</td><td class="note">EUR 200m called and idle (LP-funded) + EUR 60m drawn on the subscription facility. Non-overlapping, and both inside the EUR 750m commitment envelope. Drags are spread across the capital they arise on &mdash; not commitments, NAV or cumulative called capital.</td></tr>
-              <tr><td>Multi-currency facility draw available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the credit agreement</td></tr>
-              <tr><td>LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the LPA</td></tr>
-              <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">COMMITMENTS</span></td><td class="note">Commitments basis carries no marginal fee drag &mdash; see the fee basis diagnostic</td></tr>
-              <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="note">Not a market-observable rate. Defaults to fund target IRR; confirm the house basis.</td></tr>
-              <tr><td>Economic cost of forgone deployment</td><td class="num v-formula">1,726,027</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 14.00%. The return the capital would have earned between drawdown and deployment. Invoiced by nobody, recorded by no treasury system, borne by the fund.</td></tr>
-              <tr><td>All-in cost of non-working capital</td><td class="num"><span class="v-toggle">18.44%</span></td><td class="note">Annualised. Built from LP preferred return + commitment fee on undrawn facilities + subscription facility interest + forgone deployment return, <em>less</em> deposit yield earned on placement, divided by capital-years non-working. Independent of any allocation base. The cash elements alone &mdash; excluding the forgone deployment return, which is a judgement input &mdash; come to 4.44%.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
   </div>
+</div>
 
 <section class="light" id="what">
   <div class="wrap">
