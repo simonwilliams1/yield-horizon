@@ -379,6 +379,8 @@ footer{background:var(--ink-deep);border-top:1px solid var(--line-dark);padding:
 
 /* sheet */
 .sheet{border:1px solid var(--line-light);background:#fff;color:var(--ink);overflow:hidden}
+.hero-sheet{margin-top:clamp(2rem,4vw,3rem)}
+@media(min-width:960px){.hero-sheet{grid-column:1 / -1}}
 .sheet-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
   background:var(--ink);color:var(--paper);padding:.7rem 1.1rem}
 .sheet-name{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
@@ -577,42 +579,21 @@ body.js .panel.is-active{display:block}
       </div>
       <p class="hero-credential">Built by a fund finance and treasury practitioner &mdash; nine years across European private equity and private debt funds at Oaktree, before that Citco and KPMG. Not a consultancy pyramid.</p>
 
-      <div class="sheet" style="margin-top:2.5rem">
-        <div class="sheet-bar">
-          <span class="sheet-name">Output of ICC</span>
-          <span class="sheet-meta">Challenge these in the room, not afterwards</span>
-        </div>
-        <div class="sheet-scroll">
-          <table>
-            <thead><tr><th style="width:38%">Condition</th><th style="width:20%" class="num">Setting</th><th>Note</th></tr></thead>
-            <tbody>
-              <tr><td>Return</td><td class="num v-link">5.68%</td><td class="note"></td></tr>
-              <tr><td>Drag allocation base</td><td class="num v-link">400,000,000</td><td class="note">Fund-level drags spread across this, not this deal alone</td></tr>
-              <tr><td>Multi-currency facility draw available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the credit agreement</td></tr>
-              <tr><td>LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the LPA</td></tr>
-              <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">AUM</span></td><td class="note">AUM-basis funds incur fee drag on idle capital</td></tr>
-              <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="note">Not a market-observable rate. Defaults to fund target IRR; confirm the house basis.</td></tr>
-              <tr><td>Economic cost of forgone deployment over 75 days</td><td class="num v-formula">1,726,027</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 14.00%. The return the capital would have earned between drawdown and deployment. Invoiced by nobody, recorded by no treasury system, borne by the fund.  Note facility interest is excluded from this economic impact - refer to Component 5 in the ICC Engine.</td></tr>
-              </td><td class="note">Note facility interest is excluded from this economic impact - refer to Component 5 in the ICC Engine.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
 
     <!-- SIGNATURE ELEMENT -->
     <div class="stack" id="stack">
       <div class="stack-head">
         <span class="stack-title">Marginal ICC — worked example</span>
-        <span class="stack-sub">EUR 500mm fund</span>
+        <span class="stack-sub">EUR 750mm fund</span>
       </div>
 
       <div class="gauge">
         <div class="gauge-track">
-          <div class="seg seg--base" data-w="83.8" style="width:83.8%"></div>
-          <div class="seg seg--drag" data-w="7.2" style="width:7.2%"></div>
-          <div class="seg seg--drag" data-w="2.1" style="width:2.1%"></div>
-          <div class="seg seg--drag" data-w="6.8" style="width:6.8%"></div>
+          <div class="seg seg--base" data-w="60.8" style="width:60.8%"></div>
+          <div class="seg seg--drag" data-w="30.2" style="width:30.2%"></div>
+          <div class="seg seg--drag" data-w="2.6" style="width:2.6%"></div>
+          <div class="seg seg--drag" data-w="6.4" style="width:6.4%"></div>
         </div>
         <div class="marker" aria-hidden="true"></div>
       </div>
@@ -628,15 +609,15 @@ body.js .panel.is-active{display:block}
 
       <div class="row">
         <div class="row-top"><span class="row-label">LP capital &mdash; 60% at 8.00%</span><span class="row-val" data-count="480">480 bps</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="55.3" style="width:55.3%"></div></div>
+        <div class="bar-track"><div class="bar-fill" data-w="40.1" style="width:40.1%"></div></div>
       </div>
       <div class="row">
         <div class="row-top"><span class="row-label">Subscription line &mdash; 30% at 5.20%</span><span class="row-val" data-count="156">156 bps</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="18" style="width:18%"></div></div>
+        <div class="bar-track"><div class="bar-fill" data-w="13.0" style="width:13.0%"></div></div>
       </div>
       <div class="row">
         <div class="row-top"><span class="row-label">NAV facility &mdash; 10% at 9.10%</span><span class="row-val" data-count="91">91 bps</span></div>
-        <div class="bar-track"><div class="bar-fill" data-w="10.5" style="width:10.5%"></div></div>
+        <div class="bar-track"><div class="bar-fill" data-w="7.6" style="width:7.6%"></div></div>
       </div>
       <div class="subtotal"><span>Weighted funding cost</span><span data-count="727">727 bps</span></div>
 
@@ -644,39 +625,62 @@ body.js .panel.is-active{display:block}
       <p class="eyebrow eyebrow--dark" style="margin-bottom:1rem">What the hurdle rate misses</p>
 
       <div class="row">
-        <div class="row-top"><span class="row-label">Net idle capital drag</span><span class="row-val" data-count="63">63 bps</span></div>
-        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="7.2" style="width:7.2%"></div></div>
+        <div class="row-top"><span class="row-label">Net idle capital drag</span><span class="row-val" data-count="361">361 bps</span></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="30.2" style="width:30.2%"></div></div>
       </div>
       <div class="row">
-        <div class="row-top"><span class="row-label">Management fee drag</span><span class="row-val" data-count="18">18 bps</span></div>
-        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="2.1" style="width:2.1%"></div></div>
+        <div class="row-top"><span class="row-label">FX / IRS sourcing cost</span><span class="row-val" data-count="32">32 bps</span></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="2.6" style="width:2.6%"></div></div>
       </div>
       <div class="row">
-        <div class="row-top"><span class="row-label">Drawn capital opportunity cost</span><span class="row-val" data-count="59">59 bps</span></div>
-        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="6.8" style="width:6.8%"></div></div>
+        <div class="row-top"><span class="row-label">Drawn capital opportunity cost</span><span class="row-val" data-count="76">76 bps</span></div>
+        <div class="bar-track"><div class="bar-fill bar-fill--drag" data-w="6.4" style="width:6.4%"></div></div>
       </div>
 
-      <div class="subtotal"><span>Invisible cost &mdash; never invoiced</span><span data-count="140">140 bps</span></div>
+      <div class="subtotal"><span>Invisible cost &mdash; never invoiced</span><span data-count="469">469 bps</span></div>
 
       <div class="stack-divider"></div>
       <div class="total">
         <span class="total-label">Marginal ICC</span>
-        <span><span class="total-fig" data-count="868">868</span> <span class="total-unit">bps</span></span>
+        <span><span class="total-fig" data-count="1196">1,196</span> <span class="total-unit">bps</span></span>
       </div>
 
       <div class="hurdle">
         <div class="hurdle-row"><span class="hurdle-label">Static hurdle rate</span><span class="hurdle-val">800 bps</span></div>
-        <div class="gap-row"><span class="gap-label">Capital underpriced by</span><span class="gap-val" data-count="68">68 bps</span></div>
+        <div class="gap-row"><span class="gap-label">Capital underpriced by</span><span class="gap-val" data-count="396">396 bps</span></div>
       </div>
 
-      <p class="stack-foot">Illustrative, on the five-component v1.2 model. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the glossary if the terms are unfamiliar.</p>
+      <p class="stack-foot">Illustrative, on the five-component ClarityStack v3.2 engine. Components are rounded to the nearest basis point; totals are computed on unrounded figures. Every input &mdash; source mix, days idle, drawdown timing, fee basis &mdash; is yours to set. <a href="#view-methodology">See the full calculation</a>, or start with the glossary if the terms are unfamiliar.</p>
+    </div>
+
+      <div class="sheet hero-sheet">
+        <div class="sheet-bar">
+          <span class="sheet-name">Output of ICC</span>
+          <span class="sheet-meta">Challenge these in the room, not afterwards</span>
+        </div>
+        <div class="sheet-scroll">
+          <table>
+            <thead><tr><th style="width:38%">Condition</th><th style="width:20%" class="num">Setting</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td>Return</td><td class="num v-link">5.68%</td><td class="note"></td></tr>
+              <tr><td>Non-working capital base</td><td class="num v-link">260,000,000</td><td class="note">EUR 200m called and idle (LP-funded) + EUR 60m drawn on the subscription facility. Non-overlapping, and both inside the EUR 750m commitment envelope. Drags are spread across the capital they arise on &mdash; not commitments, NAV or cumulative called capital.</td></tr>
+              <tr><td>Multi-currency facility draw available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the credit agreement</td></tr>
+              <tr><td>LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the LPA</td></tr>
+              <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">COMMITMENTS</span></td><td class="note">Commitments basis carries no marginal fee drag &mdash; see the fee basis diagnostic</td></tr>
+              <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="note">Not a market-observable rate. Defaults to fund target IRR; confirm the house basis.</td></tr>
+              <tr><td>Economic cost of forgone deployment</td><td class="num v-formula">1,726,027</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 14.00%. The return the capital would have earned between drawdown and deployment. Invoiced by nobody, recorded by no treasury system, borne by the fund.</td></tr>
+              <tr><td>All-in cost of non-working capital</td><td class="num"><span class="v-toggle">18.44%</span></td><td class="note">Annualised. Built from LP preferred return + commitment fee on undrawn facilities + subscription facility interest + forgone deployment return, <em>less</em> deposit yield earned on placement, divided by capital-years non-working. Independent of any allocation base. The cash elements alone &mdash; excluding the forgone deployment return, which is a judgement input &mdash; come to 4.44%.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
 
 <section class="light" id="what">
   <div class="wrap">
-    <p class="eyebrow">The invisible 140</p>
+    <p class="eyebrow">The invisible 469</p>
     <h2>Three costs that never reach the investment committee.</h2>
     <p class="section-lede">We call them invisible because nobody invoices for them. A bank bills you for interest and it lands in the accounts; nobody bills you for the profit you failed to make while capital sat waiting. Both are real money. Only one gets counted &mdash; and the uncounted ones arise from <em>timing</em> rather than pricing, which is why a hurdle rate set once at fund formation cannot possibly capture them.</p>
 
@@ -687,17 +691,17 @@ body.js .panel.is-active{display:block}
         <p class="cost-copy">LP preferred return, subscription line and NAV facility, blended by their real share of the next drawdown. Conventional, well understood, and comfortably below a typical 800bps hurdle.</p>
       </div>
       <div class="cost">
-        <div class="cost-fig">63 bps</div>
+        <div class="cost-fig">361 bps</div>
         <h3 class="cost-name">Net idle capital drag</h3>
-        <p class="cost-copy">Preferred return compounds from the call date, not the deployment date. Ninety days of idle capital costs EUR 4.2m gross &mdash; EUR 2.5m after deposit interest, and only if the LPA permits placement at all.</p>
+        <p class="cost-copy">Preferred return compounds from the call date, not the deployment date, and the capital forgoes the return it would have earned deployed. Ninety days of idle capital costs EUR 11.0m gross &mdash; EUR 9.4m after deposit interest, and only if the LPA permits placement at all.</p>
       </div>
       <div class="cost">
-        <div class="cost-fig">18 bps</div>
-        <h3 class="cost-name">Management fee drag</h3>
-        <p class="cost-copy">On an AuM basis, fees accrue on capital that has been called but is doing nothing. On a commitment basis they do not. The model switches between the two rather than assuming one.</p>
+        <div class="cost-fig">32 bps</div>
+        <h3 class="cost-name">FX / IRS sourcing cost</h3>
+        <p class="cost-copy">Only the <em>premium</em> over the base-currency tranche is incremental &mdash; the base draw is already priced in the funding cost. Charge the full path rate and you double-count it. Add the carry on swapping floating to fixed and the sourcing decision is worth 32 bps.</p>
       </div>
       <div class="cost">
-        <div class="cost-fig">59 bps</div>
+        <div class="cost-fig">76 bps</div>
         <h3 class="cost-name">Drawn capital opportunity cost</h3>
         <p class="cost-copy">Facilities drawn ahead of deployment cost you the interest on the borrowing and the return that capital was not earning. Treasury systems capture the first because someone invoices for it. Nobody invoices for the second.</p>
       </div>
@@ -720,12 +724,12 @@ body.js .panel.is-active{display:block}
       </div>
       <div class="cb-row">
         <div class="cb-lab">What it actually costs</div>
-        <div class="cb-val cb-val--big">EUR 2,367,123</div>
-        <div class="cb-note">Facility interest plus forgone deployment return at 14.00%</div>
+        <div class="cb-val cb-val--big">EUR 1,972,603</div>
+        <div class="cb-note">Sub line interest plus forgone deployment return at 14.00%, less deposit yield earned</div>
       </div>
       <div class="cb-mult">
         <span class="cb-mult-lab">Understated by</span>
-        <span class="cb-mult-val">3.7×</span>
+        <span class="cb-mult-val">3.1×</span>
       </div>
     </div>
   </div>
@@ -797,7 +801,7 @@ body.js .panel.is-active{display:block}
   <div class="wrap">
     <p class="eyebrow">Engagement</p>
     <h2>Priced against the drag it removes.</h2>
-    <p class="section-lede">On the worked example above, the invisible 140 basis points represent roughly EUR 5.6m of cost across a EUR 400m deployment window. The pilot costs a fraction of one basis point of that.</p>
+    <p class="section-lede">On the worked example above, the invisible 469 basis points are driven by EUR 11.4m of drag on EUR 260m of capital called or drawn but not yet working. The pilot costs a fraction of one basis point of that.</p>
 
     <div class="price-grid">
       <div class="price">
@@ -880,13 +884,13 @@ body.js .panel.is-active{display:block}
 <div id="view-methodology">
 <header class="pagehead">
   <div class="wrap">
-    <p class="eyebrow" style="color:var(--brass)">ClarityStack™ v1.2 — five-component methodology</p>
+    <p class="eyebrow" style="color:var(--brass)">ClarityStack™ v3.2 — five-component methodology</p>
     <h1>The calculation, shown in <em>full</em>.</h1>
-    <p>Nothing here is a black box. Every input has a stated source, every component has visible logic, and the two judgement variables are labelled as judgement variables. This is the working model, run on an illustrative EUR 500mm fund.</p>
+    <p>Nothing here is a black box. Every input has a stated source, every component has visible logic, and the two judgement variables are labelled as judgement variables. This is the working model, run on an illustrative EUR 750mm fund.</p>
 
     <div class="headline-figs">
       <div>
-        <div class="hfig-val">868</div>
+        <div class="hfig-val">1,196</div>
         <div class="hfig-lab">Marginal ICC (bps)</div>
       </div>
       <div>
@@ -894,11 +898,11 @@ body.js .panel.is-active{display:block}
         <div class="hfig-lab">Static hurdle (bps)</div>
       </div>
       <div class="hfig--teal">
-        <div class="hfig-val">+68</div>
+        <div class="hfig-val">+396</div>
         <div class="hfig-lab">Hurdle understates by</div>
       </div>
       <div class="hfig--teal">
-        <div class="hfig-val">+552</div>
+        <div class="hfig-val">+224</div>
         <div class="hfig-lab">Deal spread over ICC</div>
       </div>
     </div>
@@ -953,14 +957,14 @@ body.js .panel.is-active{display:block}
           <thead><tr><th style="width:26%">Term</th><th>What it means</th></tr></thead>
           <tbody>
             <tr class="section-row"><td colspan="2">Measurement</td></tr>
-            <tr><td>Basis point (bps)</td><td class="note">One hundredth of one percent. 100 bps = 1%. Used because in finance the difference between 8.00% and 8.68% matters enormously, and "68 basis points" is clearer than "nought point six eight percent".</td></tr>
+            <tr><td>Basis point (bps)</td><td class="note">One hundredth of one percent. 100 bps = 1%. Used because in finance the difference between 8.00% and 11.96% matters enormously, and "396 basis points" is clearer than "nought point six eight percent".</td></tr>
             <tr><td>Annualised</td><td class="note">A cost expressed as if it ran for a full year, so figures covering different periods can be compared. A 90-day cost is annualised by scaling it: 90 &divide; 365.</td></tr>
             <tr><td>Marginal cost</td><td class="note">The cost of the <em>next</em> unit, rather than the average across everything so far. It matters because decisions are always about what to do next, and the next euro can cost quite a lot more than the average euro already spent.</td></tr>
 
             <tr class="section-row"><td colspan="2">The decision</td></tr>
             <tr><td>Hurdle rate</td><td class="note">The minimum return an investment must promise before the fund will consider it. Traditionally a fixed number set when the fund launched &mdash; typically 6% to 8% &mdash; and left unchanged for years.</td></tr>
             <tr><td>ICC</td><td class="note">Internal Cost of Capital. What this model produces: the true, current, all-in cost of deploying the next euro. It replaces the fixed hurdle rate with a figure that reflects what is actually happening in the fund today.</td></tr>
-            <tr><td>IRR</td><td class="note">Internal rate of return &mdash; the annualised profit a deal is expected to make, as a percentage. If a deal's IRR is 14.2% and the ICC is 8.68%, the deal earns 5.52 percentage points more than the money costs.</td></tr>
+            <tr><td>IRR</td><td class="note">Internal rate of return &mdash; the annualised profit a deal is expected to make, as a percentage. If a deal's IRR is 14.2% and the ICC is 11.96%, the deal earns 2.24 percentage points more than the money costs.</td></tr>
             <tr><td>Spread</td><td class="note">The gap between two rates. Here, the deal's expected return minus the cost of the capital funding it. A positive spread means the deal creates value; a negative one means it destroys value however profitable it looks in isolation.</td></tr>
             <tr><td>Investment committee (IC)</td><td class="note">The group inside the fund that approves or rejects proposed investments. The ICC figure is designed to go into the paperwork they review.</td></tr>
 
@@ -987,7 +991,7 @@ body.js .panel.is-active{display:block}
     </div>
 
     <div class="callout callout--teal">
-      <strong>Why any of this matters.</strong> In the worked example the fund believes its capital costs 8%. It actually costs 8.68%. That gap is small enough to sound trivial and large enough to matter: on a EUR 400m deployment programme, 68 basis points is roughly EUR 2.7m of cost the fund had not counted. Deals approved in that gap looked profitable and were not.
+      <strong>Why any of this matters.</strong> In the worked example the fund believes its capital costs 8%. It actually costs 11.96%. The difference is EUR 11.4m of drag on EUR 260m of capital that had been called or drawn but was not yet working &mdash; the preferred return still accruing, the facility interest still running, and the return that capital was not earning. Deals approved in that gap looked profitable and were not. Deals approved in that gap looked profitable and were not.
     </div>
   </div>
 </div>
@@ -999,10 +1003,10 @@ body.js .panel.is-active{display:block}
 
     <div class="formula">
 Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
-<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Net Idle Capital Drag <span class="new">— v1.2: nets off idle cash yield</span><br>
-<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> FX Sourcing Cost (optimised) <span class="new">— v1.2: lower of direct draw vs hedged</span><br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Net Idle Capital Drag <span class="new">— v3.2: charges the forgone deployment return symmetrically with Component 5</span><br>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> FX Sourcing Cost (optimised) <span class="new">— v3.2: premium form, path-optimised, plus IRS carry</span><br>
 <span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Management Fee Drag Adjustment<br>
-<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Drawn Capital Opportunity Cost <span class="new">— v1.2: new component</span>
+<span class="op">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</span> Drawn Capital Opportunity Cost <span class="new">— v3.2: sub line carry + forgone return, less deposit yield earned</span>
     </div>
 
     <div class="sheet">
@@ -1047,7 +1051,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
 <div class="panel" id="p-inputs" role="tabpanel" aria-labelledby="t-inputs">
   <div class="wrap">
     <h2>Every input carries its source.</h2>
-    <p class="panel-lede">Twenty-three inputs, each labelled with the document it comes from. Where a figure is a judgement rather than an observable rate, it says so. The worked example below is an illustrative EUR 500mm fund.</p>
+    <p class="panel-lede">Thirty inputs, each labelled with the document it comes from. Where a figure is a judgement rather than an observable rate, it says so. The worked example below is an illustrative EUR 750mm fund.</p>
 
     <div class="sheet">
       <div class="sheet-bar">
@@ -1059,7 +1063,9 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
           <thead><tr><th style="width:31%">Input</th><th style="width:15%" class="num">Value</th><th style="width:8%">Unit</th><th>Basis / source</th></tr></thead>
           <tbody>
             <tr class="section-row"><td colspan="4">1 &nbsp;Fund parameters</td></tr>
-            <tr><td>Fund size (commitments)</td><td class="num v-input">500,000,000</td><td class="unit">EUR</td><td class="note">LPA / final close documentation</td></tr>
+            <tr><td>Fund size (commitments)</td><td class="num v-input">750,000,000</td><td class="unit">EUR</td><td class="note">LPA / final close documentation</td></tr>
+            <tr><td>Current NAV</td><td class="num v-input">520,000,000</td><td class="unit">EUR</td><td class="note">Latest reported NAV</td></tr>
+            <tr><td>Called capital (cumulative)</td><td class="num v-input">600,000,000</td><td class="unit">EUR</td><td class="note">Cumulative drawn from LPs</td></tr>
             <tr><td>Fund base currency</td><td class="num v-input">EUR</td><td class="unit"></td><td class="note">LPA</td></tr>
 
             <tr class="section-row"><td colspan="4">2 &nbsp;Capital source mix</td></tr>
@@ -1075,30 +1081,36 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
             <tr><td>Called capital sitting idle</td><td class="num v-input">200,000,000</td><td class="unit">EUR</td><td class="note">Treasury cash position report</td></tr>
             <tr><td>Days idle</td><td class="num v-input">90</td><td class="unit">days</td><td class="note">Call date to expected deployment date</td></tr>
             <tr><td>LP preferred return rate</td><td class="num v-input">8.00%</td><td class="unit">%</td><td class="note">LPA preferred return</td></tr>
-            <tr><td>Commitment fees on undrawn facilities</td><td class="num v-input">0.50%</td><td class="unit">%</td><td class="note">Credit agreement commitment fee</td></tr>
-            <tr><td>Overnight / term deposit yield</td><td class="num v-input">3.40%</td><td class="unit">%</td><td class="note">Treasury sweep rate at measurement date</td></tr>
+            <tr><td>Undrawn facility amount</td><td class="num v-input">100,000,000</td><td class="unit">EUR</td><td class="note">Undrawn portion of credit facilities</td></tr>
+            <tr><td>Commitment fees on undrawn facilities</td><td class="num v-input">0.50%</td><td class="unit">%</td><td class="note">Credit agreement commitment fee. Charged on the <em>undrawn</em> amount, not on idle cash.</td></tr>
+            <tr><td>Overnight / term deposit yield</td><td class="num v-input">3.20%</td><td class="unit">%</td><td class="note">Treasury sweep rate at measurement date</td></tr>
             <tr><td>Toggle: LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="unit">Y/N</td><td class="note">Must be confirmed against the LPA. Set NO if unconfirmed.</td></tr>
 
-            <tr class="section-row"><td colspan="4">4 &nbsp;Drawn but undeployed capital &nbsp;— new in v1.2</td></tr>
-            <tr><td>Amount drawn, not yet deployed</td><td class="num v-input">60,000,000</td><td class="unit">EUR</td><td class="note">Facility drawdown log vs deployment log</td></tr>
+            <tr class="section-row"><td colspan="4">4 &nbsp;Drawn but undeployed capital &nbsp;— subscription facility</td></tr>
+            <tr><td>Amount drawn, not yet deployed</td><td class="num v-input">60,000,000</td><td class="unit">EUR</td><td class="note">Facility drawdown log vs deployment log. Drawn against uncalled commitments, so it sits inside the EUR 750m envelope and is repaid by a future call.</td></tr>
             <tr><td>Days drawn and undeployed</td><td class="num v-input">75</td><td class="unit">days</td><td class="note">Drawdown date to actual deployment date</td></tr>
-            <tr><td>Facility interest rate on drawn amount</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Credit agreement: all-in rate on the facility actually drawn</td></tr>
+            <tr><td>Facility interest rate on drawn amount</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Subscription facility all-in rate. Re-link to the NAV facility rate (9.10%) for any portion drawn against NAV rather than commitments.</td></tr>
             <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="unit">%</td><td class="note">Judgement input: fund target IRR or realised portfolio IRR</td></tr>
 
             <tr class="section-row"><td colspan="4">5 &nbsp;FX sourcing</td></tr>
-            <tr><td>Foreign-currency deployment amount</td><td class="num v-input">40,000,000</td><td class="unit">EUR eq.</td><td class="note">Deal funding requirement in non-base currency</td></tr>
-            <tr><td>Proportion of deployment requiring FX</td><td class="num v-input">0.0%</td><td class="unit">%</td><td class="note">Set to 0% if the deal is base-currency only</td></tr>
+            <tr><td>Investment currency</td><td class="num v-input">USD</td><td class="unit"></td><td class="note">Currency of the target investment</td></tr>
+            <tr><td>Foreign-currency deployment amount</td><td class="num v-input">30,000,000</td><td class="unit">EUR eq.</td><td class="note">40% of the EUR 75m deployment</td></tr>
+            <tr><td>Proportion of deployment requiring FX</td><td class="num v-input">40.0%</td><td class="unit">%</td><td class="note">Set to 0% if the deal is base-currency only</td></tr>
             <tr><td>Toggle: multi-currency facility available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="unit">Y/N</td><td class="note">Must be confirmed in the credit agreement. Set NO if unconfirmed.</td></tr>
             <tr><td>Path A &mdash; native-currency tranche rate</td><td class="num v-input">5.65%</td><td class="unit">%</td><td class="note">Credit agreement: target-currency tranche pricing</td></tr>
             <tr><td>Path B &mdash; base-currency tranche rate</td><td class="num v-input">5.20%</td><td class="unit">%</td><td class="note">Credit agreement: base-currency tranche pricing</td></tr>
             <tr><td>Path B &mdash; forward points (annualised)</td><td class="num v-input">0.68%</td><td class="unit">%</td><td class="note">FX forward quote; embeds cross-currency basis</td></tr>
+            <tr><td>IRS carry cost (floating &rarr; fixed)</td><td class="num v-input">0.45%</td><td class="unit">%</td><td class="note">Net cost of swapping floating to fixed</td></tr>
+            <tr><td>IRS notional as % of deployment</td><td class="num v-input">30.0%</td><td class="unit">%</td><td class="note">Share of deployed capital carrying IRS exposure</td></tr>
 
             <tr class="section-row"><td colspan="4">6 &nbsp;Management fee</td></tr>
-            <tr><td>Toggle: fee basis</td><td class="num"><span class="v-toggle">AUM</span></td><td class="unit">AUM/COMMIT</td><td class="note">AUM = fees on invested and idle capital. COMMIT = on commitments.</td></tr>
+            <tr><td>Toggle: fee basis</td><td class="num"><span class="v-toggle">COMMITMENTS</span></td><td class="unit">Commit / Called / NAV</td><td class="note">Commitments = no marginal fee on the next unit. Called capital = fee rate &times; fresh-call share. NAV = full fee rate.</td></tr>
             <tr><td>Management fee rate</td><td class="num v-input">1.50%</td><td class="unit">%</td><td class="note">LPA management fee provision</td></tr>
 
-            <tr class="section-row"><td colspan="4">7 &nbsp;Drag allocation basis</td></tr>
-            <tr><td>Total expected deployment over drag period</td><td class="num v-input">400,000,000</td><td class="unit">EUR</td><td class="note">Capital expected across all deals in the measurement window</td></tr>
+            <tr class="section-row"><td colspan="4">7 &nbsp;Drag allocation basis &nbsp;— non-working capital</td></tr>
+            <tr><td>Called capital sitting idle (LP-funded)</td><td class="num v-formula">200,000,000</td><td class="unit">EUR</td><td class="note">Linked from section 3</td></tr>
+            <tr><td>Drawn, not yet deployed (subscription facility)</td><td class="num v-formula">60,000,000</td><td class="unit">EUR</td><td class="note">Linked from section 4</td></tr>
+            <tr class="total-row"><td>Capital called or drawn but NOT deployed</td><td class="num">260,000,000</td><td class="unit">EUR</td><td class="note">The population these drags arise on. Non-overlapping: one pool is LP-funded, the other facility-funded. The model errors if this is ever set to commitments, NAV or cumulative called capital.</td></tr>
 
             <tr class="section-row"><td colspan="4">8 &nbsp;Deal assessment</td></tr>
             <tr><td>Deployment amount for this deal</td><td class="num v-input">75,000,000</td><td class="unit">EUR</td><td class="note">Proposed investment size</td></tr>
@@ -1110,7 +1122,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
     </div>
 
     <div class="callout">
-      <strong>The allocation basis is the input that moves the answer most.</strong> Fund-level drags &mdash; idle capital, fee drag, interest on drawn-but-undeployed capital &mdash; are spread across total expected deployment of EUR 400mm, not loaded onto the single deal being assessed. Loading them onto one deal would overstate its cost several times over and produce a threshold no deal could clear. Set this figure carefully, and set it consistently across deals.
+      <strong>The allocation basis is the input that moves the answer most.</strong> Fund-level drags &mdash; idle capital, fee drag, interest on drawn-but-undeployed capital &mdash; are spread across the capital they arise on: EUR 260mm called or drawn and not yet deployed. That is EUR 200mm of idle LP capital plus EUR 60mm drawn on the subscription facility &mdash; non-overlapping, because one is funded by a capital call and the other by a facility drawdown, and both sitting inside the EUR 750mm commitment envelope. The base is deliberately <em>not</em> commitments, NAV or cumulative called capital: those are balance-sheet totals, and dividing a 90-day drag by a lifetime balance understates the cost per euro by design.
     </div>
   </div>
 </div>
@@ -1124,27 +1136,27 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
     <div class="waterfall" id="wf">
       <div class="wf-row">
         <div class="wf-top"><span class="wf-label">1 &nbsp;Weighted cost of next unit deployed</span><span class="wf-val" data-count="727">727 bps</span></div>
-        <div class="wf-track"><div class="wf-fill" data-w="83.8" style="width:83.8%"></div></div>
+        <div class="wf-track"><div class="wf-fill" data-w="60.8" style="width:60.8%"></div></div>
       </div>
       <div class="wf-row">
-        <div class="wf-top"><span class="wf-label">2 &nbsp;Net idle capital drag</span><span class="wf-val" data-count="63">63 bps</span></div>
-        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="7.2" style="width:7.2%"></div></div>
+        <div class="wf-top"><span class="wf-label">2 &nbsp;Net idle capital drag</span><span class="wf-val" data-count="361">361 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="30.2" style="width:30.2%"></div></div>
       </div>
       <div class="wf-row">
-        <div class="wf-top"><span class="wf-label">3 &nbsp;FX sourcing cost (optimised)</span><span class="wf-val" data-count="0">0 bps</span></div>
+        <div class="wf-top"><span class="wf-label">3 &nbsp;FX / IRS sourcing cost (optimised)</span><span class="wf-val" data-count="32">32 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="2.6" style="width:2.6%"></div></div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-top"><span class="wf-label">4 &nbsp;Marginal management fee drag</span><span class="wf-val" data-count="0">0 bps</span></div>
         <div class="wf-track"><div class="wf-fill wf-fill--nil" data-w="0.6" style="width:0.6%"></div></div>
       </div>
       <div class="wf-row">
-        <div class="wf-top"><span class="wf-label">4 &nbsp;Management fee drag</span><span class="wf-val" data-count="18">18 bps</span></div>
-        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="2.1" style="width:2.1%"></div></div>
-      </div>
-      <div class="wf-row">
-        <div class="wf-top"><span class="wf-label">5 &nbsp;Drawn capital opportunity cost</span><span class="wf-val" data-count="59">59 bps</span></div>
-        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="6.8" style="width:6.8%"></div></div>
+        <div class="wf-top"><span class="wf-label">5 &nbsp;Drawn capital opportunity cost</span><span class="wf-val" data-count="76">76 bps</span></div>
+        <div class="wf-track"><div class="wf-fill wf-fill--drag" data-w="6.4" style="width:6.4%"></div></div>
       </div>
       <div class="wf-total">
         <span class="wf-total-lab">Marginal ICC</span>
-        <span><span class="wf-total-val" data-count="868">868</span> <span class="wf-total-lab">bps</span></span>
+        <span><span class="wf-total-val" data-count="1196">1,196</span> <span class="wf-total-lab">bps</span></span>
       </div>
     </div>
 
@@ -1164,32 +1176,38 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
             <tr class="total-row"><td>Component 1</td><td class="num">7.27%</td><td class="unit">727 bps</td><td class="note">4.80% + 1.56% + 0.91%. An annual rate: the blended cost of holding this funding mix for a year.</td></tr>
 
             <tr class="section-row"><td colspan="4">Component 2 &nbsp;— Net idle capital drag &nbsp;· measured over 90 days</td></tr>
-            <tr><td>Gross idle drag</td><td class="num v-formula">4,191,781</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; (8.00% preferred return + 0.50% commitment fee) = EUR 4,191,781. The preferred return accrues to LPs from the day capital is <em>called</em>, not the day it is invested &mdash; so 90 days of waiting costs real money.</td></tr>
-            <tr><td>Less: interest earned on placement</td><td class="num v-formula">(1,676,712)</td><td class="unit">EUR</td><td class="note">EUR 200m &times; (90 &divide; 365) &times; 3.40% deposit rate = EUR 1,676,712. Earned only where the LPA permits idle cash to be held in interest-bearing accounts. If it does not, this line is zero and the drag more than doubles.</td></tr>
-            <tr><td>Net idle drag</td><td class="num v-formula">2,515,068</td><td class="unit">EUR</td><td class="note">EUR 4,191,781 &minus; EUR 1,676,712. What 90 days of idleness actually costs the fund.</td></tr>
-            <tr class="total-row"><td>Component 2</td><td class="num">0.63%</td><td class="unit">63 bps</td><td class="note">EUR 2,515,068 &divide; EUR 400m total expected deployment = 0.63%. A one-off cost per euro deployed, not an annual rate.</td></tr>
+            <tr><td>Preferred return accruing on idle capital</td><td class="num v-formula">3,945,205</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; 8.00% preferred return. The preferred return accrues to LPs from the day capital is <em>called</em>, not the day it is invested &mdash; so 90 days of waiting costs real money.</td></tr>
+            <tr><td>Forgone deployment return on idle capital</td><td class="num v-formula">6,904,110</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; 14.00%. The return this capital was not earning. Charged here on exactly the same basis as Component 5 charges it on drawn capital: the forgone return belongs to the deployment opportunity, not to the funding source. Omitting it from idle capital whilst charging it on facility draws &mdash; as most models do &mdash; makes LP capital look cheaper than borrowing.</td></tr>
+            <tr><td>Commitment fee on undrawn facilities</td><td class="num v-formula">123,288</td><td class="unit">EUR</td><td class="note">EUR 100m <em>undrawn</em> &times; (90 &divide; 365) &times; 0.50%. Charged on the undrawn portion of the facility, not on the idle cash balance &mdash; a distinction most models get wrong in the fund&rsquo;s favour.</td></tr>
+            <tr><td>Less: interest earned on placement</td><td class="num v-formula">(1,578,082)</td><td class="unit">EUR</td><td class="note">EUR 200m &times; (90 &divide; 365) &times; 3.20% deposit rate. Earned only where the LPA permits idle cash to be held in interest-bearing accounts. If it does not, this line is zero.</td></tr>
+            <tr><td>Net idle drag</td><td class="num v-formula">9,394,521</td><td class="unit">EUR</td><td class="note">EUR 3,945,205 + EUR 6,904,110 + EUR 123,288 &minus; EUR 1,578,082. What 90 days of idleness actually costs the fund.</td></tr>
+            <tr class="total-row"><td>Component 2</td><td class="num">3.61%</td><td class="unit">361 bps</td><td class="note">EUR 9,394,521 &divide; EUR 260m non-working capital = 3.61%. A one-off cost per euro of capital called or drawn and not yet deployed.</td></tr>
 
-            <tr class="section-row"><td colspan="4">Component 3 &nbsp;— FX sourcing cost (optimised)</td></tr>
+            <tr class="section-row"><td colspan="4">Component 3 &nbsp;— FX / IRS sourcing cost (optimised) &nbsp;· premium form</td></tr>
             <tr><td>Path A &mdash; direct native-currency draw</td><td class="num v-formula">5.65%</td><td class="unit">%</td><td class="note">Native-currency tranche rate</td></tr>
-            <tr><td>Path B &mdash; base-currency draw + hedge</td><td class="num v-formula">5.88%</td><td class="unit">%</td><td class="note">Base tranche rate + forward points</td></tr>
-            <tr><td>Selected path cost</td><td class="num v-formula">5.65%</td><td class="unit">%</td><td class="note">Lower path, only where multi-currency draw is confirmed</td></tr>
-            <tr class="memo-row"><td>Memo: saving vs hedged path</td><td class="num v-formula">0.23%</td><td class="unit">23 bps</td><td class="note">What the optimisation is worth when FX is in play</td></tr>
-            <tr class="total-row"><td>Component 3</td><td class="num">0.00%</td><td class="unit">0 bps</td><td class="note">Selected path &times; 0% FX proportion &mdash; nil on this deal</td></tr>
+            <tr><td>Path B &mdash; base-currency draw + hedge</td><td class="num v-formula">5.88%</td><td class="unit">%</td><td class="note">Base tranche rate 5.20% + forward points 0.68%, which embed the cross-currency basis</td></tr>
+            <tr><td>Selected path cost</td><td class="num v-formula">5.65%</td><td class="unit">%</td><td class="note">Lower path, only where a multi-currency draw is confirmed available</td></tr>
+            <tr><td>FX premium over base-currency tranche</td><td class="num v-formula">0.45%</td><td class="unit">45 bps</td><td class="note">5.65% selected path &minus; 5.20% base-currency tranche. This premium is the <em>only</em> incremental cost: the base-currency draw is already priced inside Component 1, so charging the full path rate here would double-count it.</td></tr>
+            <tr><td>FX sourcing cost</td><td class="num v-formula">0.18%</td><td class="unit">18 bps</td><td class="note">0.45% premium &times; 40% of deployment requiring FX = 0.18%</td></tr>
+            <tr><td>IRS carry cost</td><td class="num v-formula">0.14%</td><td class="unit">14 bps</td><td class="note">0.45% carry on swapping floating to fixed &times; 30% notional coverage = 0.14%</td></tr>
+            <tr class="memo-row"><td>Memo: optimisation saving vs hedged path</td><td class="num v-formula">0.09%</td><td class="unit">9 bps</td><td class="note">(5.88% &minus; 5.65%) &times; 40% FX proportion. What the path choice is worth at fund level.</td></tr>
+            <tr class="total-row"><td>Component 3</td><td class="num">0.32%</td><td class="unit">32 bps</td><td class="note">FX premium 18 bps + IRS carry 14 bps. Set the FX proportion to 0% and this component falls away entirely.</td></tr>
 
-            <tr class="section-row"><td colspan="4">Component 4 &nbsp;— Management fee drag &nbsp;· measured over the same 90 days</td></tr>
-            <tr><td>Fee drag on idle capital</td><td class="num v-formula">739,726</td><td class="unit">EUR</td><td class="note">EUR 200m idle &times; (90 &divide; 365) &times; 1.50% management fee = EUR 739,726. On an AuM basis the fee is charged on capital that has been called but is not yet working, so the fund pays to manage money that is doing nothing. On a commitment basis the fee does not vary with deployment and this line is zero.</td></tr>
-            <tr class="total-row"><td>Component 4</td><td class="num">0.18%</td><td class="unit">18 bps</td><td class="note">EUR 739,726 &divide; EUR 400m total expected deployment = 0.18%. A one-off cost per euro deployed.</td></tr>
+            <tr class="section-row"><td colspan="4">Component 4 &nbsp;— Marginal management fee drag</td></tr>
+            <tr><td>Fee basis (selected)</td><td class="num v-formula">Commitments</td><td class="unit">&mdash;</td><td class="note">Commitments | Called capital | NAV</td></tr>
+            <tr class="total-row"><td>Component 4</td><td class="num">0.00%</td><td class="unit">0 bps</td><td class="note">The fee the <em>next</em> unit of deployment adds: nil on a commitments basis, because the fee does not move with deployment. On a called-capital basis it is 1.50% &times; the 60% fresh-call share = 0.90%. On a NAV basis it is the full 1.50%. The fee <em>level</em> a fund pays is a separate matter &mdash; see the basis diagnostic on the Output tab.</td></tr>
 
-            <tr class="section-row"><td colspan="4">Component 5 &nbsp;— Drawn capital opportunity cost &nbsp;· measured over 75 days &nbsp;— new in v1.2</td></tr>
-            <tr><td>Combined annualised rate</td><td class="num v-formula">19.20%</td><td class="unit">1,920 bps</td><td class="note">5.20% facility interest rate + 14.00% forgone deployment return. You pay interest on the borrowing <em>and</em> lose the return the money would have made if invested.</td></tr>
-            <tr><td>Drawn capital opportunity cost</td><td class="num v-formula">2,367,123</td><td class="unit">EUR</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 19.20% = EUR 2,367,123. The 75 days run from the drawdown date to the date the money was actually deployed.</td></tr>
-            <tr class="memo-row"><td>Memo: facility interest alone</td><td class="num v-formula">641,096</td><td class="unit">EUR</td><td class="note">EUR 60m &times; (75 &divide; 365) &times; 5.20% = EUR 641,096. This is the only part the bank invoices for, and the only part most treasury systems record.</td></tr>
-            <tr class="total-row"><td>Component 5</td><td class="num">0.59%</td><td class="unit">59 bps</td><td class="note">EUR 2,367,123 &divide; EUR 400m total expected deployment = 0.59%. A one-off cost per euro deployed.</td></tr>
+            <tr class="section-row"><td colspan="4">Component 5 &nbsp;— Drawn capital opportunity cost &nbsp;· subscription facility, measured over 75 days</td></tr>
+            <tr><td>Combined annualised rate</td><td class="num v-formula">16.00%</td><td class="unit">1,600 bps</td><td class="note">5.20% subscription facility rate + 14.00% forgone deployment return &minus; 3.20% deposit yield earned whilst the cash sits. You pay interest on the borrowing <em>and</em> lose the return the money would have made if invested, offset only by what the balance earns on deposit. Same construction as Component 2.</td></tr>
+            <tr><td>Drawn capital opportunity cost</td><td class="num v-formula">1,972,603</td><td class="unit">EUR</td><td class="note">EUR 60m drawn &times; (75 &divide; 365) &times; 16.00%. The 75 days run from the drawdown date to the date the money was actually deployed.</td></tr>
+            <tr class="memo-row"><td>Memo: sub line interest alone</td><td class="num v-formula">641,096</td><td class="unit">EUR</td><td class="note">EUR 60m &times; (75 &divide; 365) &times; 5.20%. This is the only part the bank invoices for, and the only part most treasury systems record.</td></tr>
+            <tr class="memo-row"><td>Memo: negative carry against idle cash</td><td class="num v-formula">246,575</td><td class="unit">EUR</td><td class="note">EUR 60m &times; (75 &divide; 365) &times; (5.20% &minus; 3.20%). Borrowing on the subscription facility whilst holding EUR 200m of idle cash earning the deposit rate. No framework required to see this one &mdash; it is arithmetic on two rates the treasurer already knows.</td></tr>
+            <tr class="total-row"><td>Component 5</td><td class="num">0.76%</td><td class="unit">76 bps</td><td class="note">EUR 1,972,603 &divide; EUR 260m non-working capital = 0.76%. A one-off cost per euro of capital called or drawn and not yet deployed.</td></tr>
 
             <tr class="section-row"><td colspan="4">Marginal ICC &nbsp;— total</td></tr>
-            <tr class="total-row"><td>Marginal ICC</td><td class="num">8.68%</td><td class="unit">868 bps</td><td class="note">Sum of components 1&ndash;5</td></tr>
+            <tr class="total-row"><td>Marginal ICC</td><td class="num">11.96%</td><td class="unit">1,196 bps</td><td class="note">Sum of components 1&ndash;5. Components are rounded to the nearest basis point; the total is computed on unrounded figures.</td></tr>
             <tr><td>Typical static hurdle (reference only)</td><td class="num v-input">8.00%</td><td class="unit">800 bps</td><td class="note">The proxy this framework replaces &mdash; shown for contrast, not used in any calculation</td></tr>
-            <tr class="total-row"><td>ICC vs static hurdle</td><td class="num">+0.68%</td><td class="unit">+68 bps</td><td class="note">Positive = the static hurdle understates true cost of capital</td></tr>
+            <tr class="total-row"><td>ICC vs static hurdle</td><td class="num">+3.96%</td><td class="unit">+396 bps</td><td class="note">Positive = the static hurdle understates true cost of capital</td></tr>
           </tbody>
         </table>
       </div>
@@ -1200,7 +1218,7 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
     </div>
 
     <div class="callout callout--teal">
-      <strong>The memo line on component 5 is the point of the whole exercise.</strong> Facility interest alone on drawn-but-undeployed capital is EUR 641,096. Add the return that capital was not earning while it sat there and the true cost is EUR 2,367,123 &mdash; nearly four times larger. Treasury systems capture the first number because someone invoices for it. Nobody invoices for the second.
+      <strong>The memo line on component 5 is the point of the whole exercise.</strong> Facility interest alone on drawn-but-undeployed capital is EUR 641,096. Add the return that capital was not earning while it sat there, net of the deposit yield, and the true cost is EUR 1,972,603 &mdash; more than three times larger. Treasury systems capture the first number because someone invoices for it. Nobody invoices for the second.
     </div>
   </div>
 </div>
@@ -1221,12 +1239,14 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
           <thead><tr><th style="width:31%">Measure</th><th style="width:18%" class="num">Value</th><th>Note</th></tr></thead>
           <tbody>
             <tr><td>Deployment amount</td><td class="num v-link">75,000,000</td><td class="note">Proposed investment size</td></tr>
-            <tr><td>Marginal ICC</td><td class="num v-link">8.68%</td><td class="note">Live cost of deploying the next unit of capital</td></tr>
+            <tr><td>Marginal ICC</td><td class="num v-link">11.96%</td><td class="note">Live cost of deploying the next unit of capital</td></tr>
             <tr><td>Expected deal IRR (gross)</td><td class="num v-link">14.20%</td><td class="note">Deal team underwriting model</td></tr>
-            <tr><td>Spread over ICC</td><td class="num v-formula">5.52%</td><td class="note">Deal IRR less marginal ICC</td></tr>
-            <tr><td>Spread over ICC (bps)</td><td class="num v-formula">552</td><td class="note">Same figure in basis points</td></tr>
+            <tr><td>Spread over ICC</td><td class="num v-formula">2.24%</td><td class="note">Deal IRR less marginal ICC</td></tr>
+            <tr><td>Spread over ICC (bps)</td><td class="num v-formula">224</td><td class="note">Same figure in basis points</td></tr>
             <tr><td>Required spread (house policy)</td><td class="num v-link">1.00%</td><td class="note">Minimum ICC clearance margin</td></tr>
             <tr class="total-row"><td>Recommendation</td><td class="num" style="color:var(--teal);font-weight:600">PROCEED</td><td class="note">Proceed only where spread over ICC meets or exceeds house policy minimum</td></tr>
+            <tr><td>Memo: all-in cost of non-working capital</td><td class="num v-formula">18.44%</td><td class="note">Annualised. LP preferred return + commitment fee on undrawn facilities + subscription facility interest + forgone deployment return, <em>less</em> deposit yield earned on placement, divided by capital-years non-working (EUR 200m for 90 days + EUR 60m for 75 days). Independent of any allocation base. Cash elements alone &mdash; excluding the forgone deployment return, a judgement input &mdash; total 4.44%.</td></tr>
+            <tr><td>Memo: management fee basis differential</td><td class="num v-formula">3,450,000</td><td class="note">Annual fee on a commitments basis (EUR 11.25m) less the lowest available basis, NAV (EUR 7.80m). A negotiating fact borne by the fund, <em>not</em> a marginal cost of deployment &mdash; deliberately excluded from the ICC above.</td></tr>
           </tbody>
         </table>
       </div>
@@ -1241,12 +1261,12 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
         <table>
           <thead><tr><th style="width:44%">Component</th><th style="width:18%" class="num">Contribution</th><th class="num">Share of total ICC</th></tr></thead>
           <tbody>
-            <tr><td>1 &nbsp;Weighted cost of next unit deployed</td><td class="num v-link">7.27%</td><td class="num">83.8%</td></tr>
-            <tr><td>2 &nbsp;Net idle capital drag</td><td class="num v-link">0.63%</td><td class="num">7.2%</td></tr>
-            <tr><td>3 &nbsp;FX sourcing cost (optimised)</td><td class="num v-link">0.00%</td><td class="num">0.0%</td></tr>
-            <tr><td>4 &nbsp;Management fee drag</td><td class="num v-link">0.18%</td><td class="num">2.1%</td></tr>
-            <tr><td>5 &nbsp;Drawn capital opportunity cost</td><td class="num v-link">0.59%</td><td class="num">6.8%</td></tr>
-            <tr class="total-row"><td>Total</td><td class="num">8.68%</td><td class="num">100.0%</td></tr>
+            <tr><td>1 &nbsp;Weighted cost of next unit deployed</td><td class="num v-link">7.27%</td><td class="num">60.8%</td></tr>
+            <tr><td>2 &nbsp;Net idle capital drag</td><td class="num v-link">3.61%</td><td class="num">30.2%</td></tr>
+            <tr><td>3 &nbsp;FX / IRS sourcing cost (optimised)</td><td class="num v-link">0.32%</td><td class="num">2.6%</td></tr>
+            <tr><td>4 &nbsp;Marginal management fee drag</td><td class="num v-link">0.00%</td><td class="num">0.0%</td></tr>
+            <tr><td>5 &nbsp;Drawn capital opportunity cost</td><td class="num v-link">0.76%</td><td class="num">6.4%</td></tr>
+            <tr class="total-row"><td>Total</td><td class="num">11.96%</td><td class="num">100.0%</td></tr>
           </tbody>
         </table>
       </div>
@@ -1261,10 +1281,10 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
         <table>
           <thead><tr><th style="width:38%">Condition</th><th style="width:20%" class="num">Setting</th><th>Note</th></tr></thead>
           <tbody>
-            <tr><td>Drag allocation base</td><td class="num v-link">400,000,000</td><td class="note">Fund-level drags spread across this, not this deal alone</td></tr>
+            <tr><td>Non-working capital base</td><td class="num v-link">260,000,000</td><td class="note">EUR 200m called and idle (LP-funded) + EUR 60m drawn on the subscription facility. Non-overlapping, and both inside the EUR 750m commitment envelope. Drags are spread across the capital they arise on &mdash; not commitments, NAV or cumulative called capital.</td></tr>
             <tr><td>Multi-currency facility draw available?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the credit agreement</td></tr>
             <tr><td>LPA permits idle cash placement?</td><td class="num"><span class="v-toggle">YES</span></td><td class="note">Must be confirmed in the LPA</td></tr>
-            <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">AUM</span></td><td class="note">AUM-basis funds incur fee drag on idle capital</td></tr>
+            <tr><td>Management fee basis</td><td class="num"><span class="v-toggle">COMMITMENTS</span></td><td class="note">Commitments basis carries no marginal fee drag &mdash; see the fee basis diagnostic</td></tr>
             <tr><td>Forgone deployment return</td><td class="num"><span class="v-toggle">14.00%</span></td><td class="note">Not a market-observable rate. Defaults to fund target IRR; confirm the house basis.</td></tr>
           </tbody>
         </table>
@@ -1288,10 +1308,10 @@ Marginal ICC (%) = &nbsp;Weighted Cost of Next Unit Deployed<br>
       <a class="btn btn--primary" href="#contact">Book a diagnostic</a>
     </div>
     <div>
-      <div class="spec-line"><span>Version</span><span>ClarityStack™ v1.2</span></div>
+      <div class="spec-line"><span>Version</span><span>ClarityStack™ v3.2</span></div>
       <div class="spec-line"><span>Components</span><span>Five</span></div>
       <div class="spec-line"><span>Inputs</span><span>23, each sourced</span></div>
-      <div class="spec-line"><span>Worked example</span><span>EUR 500mm fund</span></div>
+      <div class="spec-line"><span>Worked example</span><span>EUR 750mm fund</span></div>
       <div class="spec-line" style="border-bottom:none"><span>Format</span><span>Excel, no add-ins</span></div>
     </div>
   </div>
